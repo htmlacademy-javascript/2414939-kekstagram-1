@@ -16,7 +16,7 @@ function padString(str, minLength, paddingStr) {
   if (str.length >= minLength) {
     return str;
   }
-  const padded = paddingStr.repeat(Math.ceil(paddingLength / paddingStr.length)).slice(0, paddingLength);
+  const padded = paddingStr.repeat(Math.ceil(minLength / paddingStr.length)).slice(0, minLength);
   return padded + str;
 }
 
