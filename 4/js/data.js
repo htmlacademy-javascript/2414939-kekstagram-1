@@ -3,7 +3,7 @@ export const avatars = [
   'img/avatar-4.svg', 'img/avatar-5.svg', 'img/avatar-6.svg'
 ];
 
-export const names = ['Иван', 'Анна', 'Алексей', 'Ольга', 'Дмитрий', 'Елена'];
+export const names = ['Иван', 'Анна', 'Алексей', 'Ольга', 'Дмитрий', 'Сергей'];
 
 export const messages = [
   'Всё отлично!',
