@@ -7,6 +7,7 @@ const socialComments = bigPictureSection.querySelector('.social__comments');
 const commentCountBlock = bigPictureSection.querySelector('.social__comment-count');
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
 const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
+import { isEscape } from './utils.js';
 
 function clearComments() {
   socialComments.innerHTML = '';
@@ -58,7 +59,7 @@ function closeBigPicture() {
 }
 
 function onEscKey(evt) {
-  if (evt.key === 'Escape' || evt.key === 'Esc') {
+  if (isEscape(evt)) {
     evt.preventDefault();
     closeBigPicture();
   }
