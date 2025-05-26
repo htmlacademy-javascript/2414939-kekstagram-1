@@ -7,13 +7,12 @@ const socialComments = bigPictureSection.querySelector('.social__comments');
 const commentCountBlock = bigPictureSection.querySelector('.social__comment-count');
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
 const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
-import { isEscape } from './util.js';
 
 function clearComments() {
   socialComments.innerHTML = '';
 }
 
-const socialComment = bigPictureSection.querySelector('.social__comment');
+const socialComment = bigPictureSection.querySelector('.social__comment'); // находим li
 function createCommentElement(comment) {
   const cloneSocialComment = socialComment.cloneNode(true);
   cloneSocialComment.querySelector('.social__picture').src = comment.avatar;
@@ -31,7 +30,7 @@ function openBigPicture(photo) {
   commentsCount.textContent = photo.comments.length;
   socialCaption.textContent = photo.description;
 
-
+  // Скрываем блоки счётчика комментариев и загрузки новых
   commentCountBlock.classList.add('hidden');
   commentsLoader.classList.add('hidden');
 
@@ -44,24 +43,25 @@ function openBigPicture(photo) {
 
   document.body.classList.add('modal-open');
 
-
+  // Обработчики закрытия
   closeButton.addEventListener('click', closeBigPicture);
-  document.addEventListener('keydown', isEscape);
+  document.addEventListener('keydown', onEscKey);
 }
 
 function closeBigPicture() {
   bigPictureSection.classList.add('hidden');
   document.body.classList.remove('modal-open');
+
+  // Удаляем обработчики, чтобы не накапливались
   closeButton.removeEventListener('click', closeBigPicture);
-  document.removeEventListener('keydown', isEscape);
+  document.removeEventListener('keydown', onEscKey);
 }
 
-
-document.addEventListener('keydown', (event) => {
-  if (isEscape(event)) {
-    event.preventDefault();
+function onEscKey(evt) {
+  if (evt.key === 'Escape' || evt.key === 'Esc') {
+    evt.preventDefault();
     closeBigPicture();
   }
-});
+}
 
 export { openBigPicture };
