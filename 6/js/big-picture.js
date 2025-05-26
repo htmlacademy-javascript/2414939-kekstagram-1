@@ -7,30 +7,19 @@ const socialComments = bigPictureSection.querySelector('.social__comments');
 const commentCountBlock = bigPictureSection.querySelector('.social__comment-count');
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
 const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
+import { isEscape } from './util.js';
 
 function clearComments() {
   socialComments.innerHTML = '';
 }
 
+const socialComment = bigPictureSection.querySelector('.social__comment');
 function createCommentElement(comment) {
-  const li = document.createElement('li');
-  li.classList.add('social__comment');
-
-  const img = document.createElement('img');
-  img.classList.add('social__picture');
-  img.src = comment.avatar;
-  img.alt = comment.name;
-  img.width = 35;
-  img.height = 35;
-
-  const p = document.createElement('p');
-  p.classList.add('social__text');
-  p.textContent = comment.message;
-
-  li.appendChild(img);
-  li.appendChild(p);
-
-  return li;
+  const cloneSocialComment = socialComment.cloneNode(true);
+  cloneSocialComment.querySelector('.social__picture').src = comment.avatar;
+  cloneSocialComment.querySelector('.social__picture').alt = comment.name;
+  cloneSocialComment.querySelector('.social__text').textContent = comment.message;
+  return cloneSocialComment;
 }
 
 function openBigPicture(photo) {
@@ -42,7 +31,7 @@ function openBigPicture(photo) {
   commentsCount.textContent = photo.comments.length;
   socialCaption.textContent = photo.description;
 
-  // Скрываем блоки счётчика комментариев и загрузки новых
+
   commentCountBlock.classList.add('hidden');
   commentsLoader.classList.add('hidden');
 
@@ -55,25 +44,23 @@ function openBigPicture(photo) {
 
   document.body.classList.add('modal-open');
 
-  // Обработчики закрытия
+
   closeButton.addEventListener('click', closeBigPicture);
-  document.addEventListener('keydown', onEscKey);
+  document.addEventListener('keydown', isEscape);
 }
 
 function closeBigPicture() {
   bigPictureSection.classList.add('hidden');
   document.body.classList.remove('modal-open');
-
-  // Удаляем обработчики, чтобы не накапливались
   closeButton.removeEventListener('click', closeBigPicture);
-  document.removeEventListener('keydown', onEscKey);
+  document.removeEventListener('keydown', isEscape);
 }
 
-function onEscKey(evt) {
-  if (evt.key === 'Escape' || evt.key === 'Esc') {
-    evt.preventDefault();
+document.addEventListener('keydown', (event) => {
+  if (isEscape(event)) {
+    event.preventDefault();
     closeBigPicture();
   }
-}
+});
 
 export { openBigPicture };
