@@ -153,7 +153,7 @@ function setupSlider() {
     updateEffectStyle(value);
   });
 
-  sliderContainer.classList.add('hidden');
+  // sliderContainer.classList.add('hidden');
 }
 
 // Применение эффекта
