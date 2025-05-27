@@ -1,9 +1,7 @@
 // Импортируем полезную функцию isEscape из другого файла
 import { isEscape } from './utils.js';
 
-// Оборачиваем код в IIFE для изоляции переменных
 (() => {
-  // Глобальные переменные для работы с элементами формы
   let fileChooser = null;
   let overlay = null;
   let body = null;
@@ -19,10 +17,7 @@ import { isEscape } from './utils.js';
   let descriptionTextArea = null;
   let submitButton = null;
 
-  // Текущий масштаб изображения
   let currentScale = 100;
-
-  // Экземпляр Pristine для валидации формы
   let pristine = null;
 
   // Инициализация при загрузке страницы
@@ -51,25 +46,18 @@ import { isEscape } from './utils.js';
 
   // Устанавливает обработчики событий
   function setupEvents() {
-    // Открытие формы редактирования
     fileChooser.addEventListener('change', onFileSelected);
-
-    // Закрытие формы
     const closeButton = document.querySelector('#upload-cancel');
     closeButton.addEventListener('click', hideOverlay);
 
-    // Масштабирование изображения
     smallerBtn.addEventListener('click', decreaseScale);
     biggerBtn.addEventListener('click', increaseScale);
 
-    // Выбор эффекта
     effectsRadios.forEach(radio => radio.addEventListener('change', applyEffect));
 
-    // Настройка слайдера
     configureSlider();
-
-    // Валидация и отправка формы
     setUpPristineValidation();
+
     document.querySelector('#upload-select-image').addEventListener('submit', (event) => {
       sendForm(event, pristine);
     });
@@ -123,7 +111,9 @@ import { isEscape } from './utils.js';
       if (effectType !== 'none') {
         imagePreview.classList.add(`effects__preview--${effectType}`);
         sliderContainer.classList.remove('hidden');
+        configureSlider();  // Настроить слайдер для выбранного эффекта
       } else {
+        imagePreview.classList.remove(`effects__preview--${effectType}`);
         sliderContainer.classList.add('hidden');
       }
     }
@@ -155,10 +145,13 @@ import { isEscape } from './utils.js';
       }
     };
 
-    noUiSlider.create(effectLevelValue, sliderOptions);
+    // Инициализация слайдера, если он ещё не был создан
+    if (!sliderContainer.noUiSlider) {
+      noUiSlider.create(sliderContainer, sliderOptions);
+    }
 
-    // Обновляет изображение при движении слайдером
-    effectLevelValue.noUiSlider.on('update', values => {
+    // Обновляем изображение при движении слайдера
+    sliderContainer.noUiSlider.on('update', values => {
       const level = values[0];
       applyFilterBasedOnEffect(level);
     });
@@ -180,7 +173,7 @@ import { isEscape } from './utils.js';
     }
   }
 
-  // Настраивает валидацию формы
+  // Настроить валидацию формы
   function setUpPristineValidation() {
     pristine = new Pristine(document.forms['upload-select-image'], {
       classTo: 'img-upload__field-wrapper',
