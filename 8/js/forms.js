@@ -1,6 +1,7 @@
+// Импортируем полезную функцию isEscape из другого файла
 import { isEscape } from './utils.js';
 
-// Обертка кода в IIFE для изоляции переменных
+// Оборачиваем код в IIFE для изоляции переменных
 (() => {
   // Глобальные переменные для работы с элементами формы
   let fileChooser = null;
@@ -24,13 +25,13 @@ import { isEscape } from './utils.js';
   // Экземпляр Pristine для валидации формы
   let pristine = null;
 
-  // Начало работы после полной подготовки страницы
+  // Инициализация при загрузке страницы
   window.addEventListener('load', () => {
     initializeElements();
     setupEvents();
   });
 
-  // Определение ссылок на элементы формы
+  // Инициализирует ссылки на элементы формы
   function initializeElements() {
     fileChooser = document.querySelector('#upload-file');
     overlay = document.querySelector('.img-upload__overlay');
@@ -48,7 +49,7 @@ import { isEscape } from './utils.js';
     submitButton = document.querySelector('#upload-submit');
   }
 
-  // Устанавка обработчиков событий
+  // Устанавливает обработчики событий
   function setupEvents() {
     // Открытие формы редактирования
     fileChooser.addEventListener('change', onFileSelected);
@@ -62,7 +63,7 @@ import { isEscape } from './utils.js';
     biggerBtn.addEventListener('click', increaseScale);
 
     // Выбор эффекта
-    effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
+    effectsRadios.forEach(radio => radio.addEventListener('change', applyEffect));
 
     // Настройка слайдера
     configureSlider();
@@ -79,19 +80,19 @@ import { isEscape } from './utils.js';
     showOverlay();
   }
 
-  // Отображение формы редактирования
+  // Показать форму редактирования
   function showOverlay() {
     overlay.classList.remove('hidden');
     body.classList.add('modal-open');
   }
 
-  // Скрытие формы редактирования
+  // Скрыть форму редактирования
   function hideOverlay() {
     overlay.classList.add('hidden');
     body.classList.remove('modal-open');
   }
 
-  // Увеличение масштаба изображения
+  // Увеличить масштаб изображения
   function increaseScale() {
     if (currentScale <= 100 - 25) {
       currentScale += 25;
@@ -99,7 +100,7 @@ import { isEscape } from './utils.js';
     }
   }
 
-  // Уменьшение масштаба изображения
+  // Уменьшить масштаб изображения
   function decreaseScale() {
     if (currentScale >= 25 + 25) {
       currentScale -= 25;
@@ -107,13 +108,13 @@ import { isEscape } from './utils.js';
     }
   }
 
-  // Обновление значения масштаба и визуальное изменение изображения
+  // Обновляет значение масштаба и визуально меняет изображение
   function updateScale(newScale) {
     scaleValue.value = `${newScale}%`;
     previewImage.style.transform = `scale(${newScale / 100})`;
   }
 
-  // Применение выбранного эффекта
+  // Применяет выбранный эффект
   function applyEffect() {
     const selectedRadio = document.querySelector('input[name="effect"]:checked');
     if (selectedRadio) {
@@ -128,14 +129,14 @@ import { isEscape } from './utils.js';
     }
   }
 
-  // Удаление предыдущего эффекта
+  // Удаляет предыдущие эффекты
   function removeCurrentEffects() {
     imagePreview.className = imagePreview.className.split(' ')
-      .filter((className) => !className.startsWith('effects__preview'))
+      .filter(className => !className.startsWith('effects__preview'))
       .join(' ');
   }
 
-  // Конфигурация слайдера
+  // Конфигурирует слайдер
   function configureSlider() {
     const sliderOptions = {
       start: [1],
@@ -156,14 +157,14 @@ import { isEscape } from './utils.js';
 
     noUiSlider.create(effectLevelValue, sliderOptions);
 
-    // Обновление изображения при движении слайдером
-    effectLevelValue.noUiSlider.on('update', (values) => {
+    // Обновляет изображение при движении слайдером
+    effectLevelValue.noUiSlider.on('update', values => {
       const level = values[0];
       applyFilterBasedOnEffect(level);
     });
   }
 
-  // Применение фильтра в зависимости от выбранного эффекта
+  // Применяет фильтры в зависимости от выбранного эффекта
   function applyFilterBasedOnEffect(level) {
     const selectedRadio = document.querySelector('input[name="effect"]:checked');
     if (selectedRadio) {
@@ -179,7 +180,7 @@ import { isEscape } from './utils.js';
     }
   }
 
-  // Настройка валидации формы
+  // Настраивает валидацию формы
   function setUpPristineValidation() {
     pristine = new Pristine(document.forms['upload-select-image'], {
       classTo: 'img-upload__field-wrapper',
@@ -187,10 +188,10 @@ import { isEscape } from './utils.js';
     });
 
     // Ограничения на хэш-теги
-    pristine.addValidator(hashtagsInput, (value) => {
-      const tags = value.trim().split(/\s+/).map((tag) => tag.toLowerCase());
+    pristine.addValidator(hashtagsInput, value => {
+      const tags = value.trim().split(/\s+/).map(tag => tag.toLowerCase());
       return (
-        tags.every((tag) =>
+        tags.every(tag =>
           /^#[a-z\d]+$/.test(tag) && tag.length <= 20 &&
           !(tags.slice(tags.indexOf(tag)).includes(tag))
         ) && tags.length <= 5
@@ -198,10 +199,10 @@ import { isEscape } from './utils.js';
     }, 'Хэш-теги введены неверно');
 
     // Ограничения на комментарий
-    pristine.addValidator(descriptionTextArea, (value) => value.length <= 140, 'Комментарий слишком длинный');
+    pristine.addValidator(descriptionTextArea, value => value.length <= 140, 'Комментарий слишком длинный');
   }
 
-  // Отправка формы на сервер
+  // Отправляет форму на сервер
   async function sendForm(event, pristineInstance) {
     event.preventDefault();
     if (!pristineInstance.validate()) return;
@@ -222,7 +223,7 @@ import { isEscape } from './utils.js';
     }
   }
 
-  // Возвращение формы в исходное состояние
+  // Возвращает форму в исходное состояние
   function resetForm() {
     document.forms['upload-select-image'].reset();
     imagePreview.style.filter = '';
