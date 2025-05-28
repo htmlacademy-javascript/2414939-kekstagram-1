@@ -97,6 +97,14 @@ function setupEvents() {
 
 // Показываем окно загрузки
 function onFileSelected() {
+  const file = fileChooser.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      previewImage.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
   showOverlay();
 }
 
