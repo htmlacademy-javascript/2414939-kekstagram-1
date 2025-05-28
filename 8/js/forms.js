@@ -82,7 +82,7 @@ function setupEvents() {
   document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
   smallerBtn.addEventListener('click', decreaseScale);
   biggerBtn.addEventListener('click', increaseScale);
-  effectsRadios.forEach(radio => radio.addEventListener('change', applyEffect));
+  effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
   document.querySelector('#upload-select-image').addEventListener('submit', (e) => sendForm(e));
 
   setupSlider();
@@ -95,7 +95,7 @@ function setupEvents() {
   });
 }
 
-// Показываем окно загрузки
+// Отображение окна загрузки
 function onFileSelected() {
   const file = fileChooser.files[0];
   if (file) {
@@ -108,13 +108,13 @@ function onFileSelected() {
   showOverlay();
 }
 
-// Показать форму
+// Отображение формы
 function showOverlay() {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
 }
 
-// Скрыть форму
+// Скрытие формы
 function hideOverlay() {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -161,7 +161,6 @@ function setupSlider() {
     updateEffectStyle(value);
   });
 
-  // sliderContainer.classList.add('hidden');
 }
 
 // Применение эффекта
@@ -214,7 +213,7 @@ function setupValidation() {
   pristine.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
 }
 
-// Пример простой валидации хэштегов
+// Валидация хэштегов
 function validateHashtags(value) {
   if (!value) return true;
 
@@ -229,7 +228,6 @@ function sendForm(event) {
   event.preventDefault();
   if (pristine.validate()) {
     console.log('Форма прошла валидацию и готова к отправке!');
-    // Здесь могла бы быть отправка данных на сервер
     hideOverlay();
   } else {
     console.warn('Форма не прошла валидацию');
