@@ -1072,6 +1072,17 @@ main {
   background-position: -5px -149px;
 }
 
+/* Pristine error */
+
+.img-upload__field-wrapper--error {
+background-color: #fd4d4b;
+color:#ffffff;
+font-size: 12px;
+margin-top: -20px;
+z-index: 10000;
+position: relative;
+}
+
 
 /* Подвал сайта
    ========================================================================== */
