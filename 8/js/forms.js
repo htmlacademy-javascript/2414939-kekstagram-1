@@ -1,4 +1,5 @@
 import { isEscape } from './utils.js';
+import noUiSlider from 'nouislider'; // Подключаем noUiSlider явно
 
 // Эффекты с параметрами
 const EFFECTS = {
@@ -34,216 +35,190 @@ const EFFECTS = {
   }
 };
 
-// let fileChooser = null;
-// let overlay = null;
-// let body = null;
-// let smallerBtn = null;
-// let biggerBtn = null;
-// let scaleValue = null;
-// let previewImage = null;
-// let effectsRadios = null;
-// let sliderContainer = null;
-// let effectSlider = null;
-// let effectLevelValue = null;
-// let hashtagsInput = null;
-// let descriptionTextArea = null;
-// let submitButton = null;
-// let uploadForm = null;
+// Класс для управления загрузчиком изображений
+class ImageUploader {
+  constructor() {
+    this.fileChooser = document.querySelector('#upload-file');
+    this.overlay = document.querySelector('.img-upload__overlay');
+    this.body = document.body;
+    this.smallerBtn = document.querySelector('.scale__control--smaller');
+    this.biggerBtn = document.querySelector('.scale__control--bigger');
+    this.scaleValue = document.querySelector('.scale__control--value');
+    this.previewImage = document.querySelector('.img-upload__preview > img');
+    this.effectsRadios = Array.from(document.querySelectorAll('.effects__radio')); // Используем Array.from()
+    this.sliderContainer = document.querySelector('.effect-level');
+    this.effectSlider = document.querySelector('.effect-level__slider');
+    this.effectLevelValue = document.querySelector('.effect-level__value');
+    this.hashtagsInput = document.querySelector('.text__hashtags');
+    this.descriptionTextArea = document.querySelector('.text__description');
+    this.submitButton = document.querySelector('#upload-submit');
+    this.uploadForm = document.querySelector('#upload-select-image');
 
-let currentScale = 100;
-// let pristine = null;
-let currentEffect = 'none';
-
-// Инициализация
-// window.addEventListener('load', () => {
-//   initializeElements();
-//   setupEvents();
-// });
-
-// Получение элементов DOM
-// function initializeElements() {
-const fileChooser = document.querySelector('#upload-file');
-const overlay = document.querySelector('.img-upload__overlay');
-const body = document.body;
-const smallerBtn = document.querySelector('.scale__control--smaller');
-const biggerBtn = document.querySelector('.scale__control--bigger');
-const scaleValue = document.querySelector('.scale__control--value');
-const previewImage = document.querySelector('.img-upload__preview > img');
-const effectsRadios = document.querySelectorAll('.effects__radio');
-const sliderContainer = document.querySelector('.effect-level');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const hashtagsInput = document.querySelector('.text__hashtags');
-const descriptionTextArea = document.querySelector('.text__description');
-const submitButton = document.querySelector('#upload-submit');
-const uploadForm = document.querySelector('#upload-select-image');
-// }
-
-// Навешивание обработчиков
-function setupEvents() {
-  fileChooser.addEventListener('change', onFileSelected);
-  document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
-  smallerBtn.addEventListener('click', decreaseScale);
-  biggerBtn.addEventListener('click', increaseScale);
-  effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
-  // document.querySelector('#upload-select-image').addEventListener('submit', (e) => sendForm(e));
-  uploadForm.addEventListener('submit', (e) => sendForm(e));
-
-  setupSlider();
-  setupValidation();
-
-  document.addEventListener('keydown', (e) => {
-    if (isEscape(e)) {
-      hideOverlay();
-    }
-  });
-}
-
-// Отображение окна загрузки
-function onFileSelected() {
-  const file = fileChooser.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      previewImage.src = reader.result;
-    };
-    reader.readAsDataURL(file);
+    this.currentScale = 100;
+    this.currentEffect = 'none';
+    this.pristine = null;
   }
-  showOverlay();
-}
 
-// Отображение формы
-function showOverlay() {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
-}
-
-// Скрытие формы
-function hideOverlay() {
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  resetForm();
-}
-
-// Увеличение масштаба
-function increaseScale() {
-  if (currentScale < 100) {
-    currentScale += 25;
-    updateScale();
+  init() {
+    this.setupEvents();
+    this.setupSlider();
+    this.setupValidation();
   }
-}
 
-// Уменьшение масштаба
-function decreaseScale() {
-  if (currentScale > 25) {
-    currentScale -= 25;
-    updateScale();
-  }
-}
+  setupEvents() {
+    this.fileChooser.addEventListener('change', () => this.onFileSelected());
+    document.querySelector('#upload-cancel').addEventListener('click', () => this.hideOverlay());
+    this.smallerBtn.addEventListener('click', () => this.decreaseScale());
+    this.biggerBtn.addEventListener('click', () => this.increaseScale());
+    this.effectsRadios.forEach(radio => radio.addEventListener('change', () => this.applyEffect()));
+    this.uploadForm.addEventListener('submit', e => this.sendForm(e));
 
-// Применение масштаба
-function updateScale() {
-  scaleValue.value = `${currentScale}%`;
-  previewImage.style.transform = `scale(${currentScale / 100})`;
-}
-
-// Настройка слайдера
-function setupSlider() {
-  const sliderElement = document.querySelector('.effect-level__slider');
-  noUiSlider.create(sliderElement, {
-    range: { min: 0, max: 1 },
-    start: 1,
-    step: 0.1,
-    connect: 'lower'
-  });
-
-  const effectSlider = sliderElement;
-
-  sliderElement.noUiSlider.on('update', () => {
-    const value = sliderElement.noUiSlider.get();
-    effectLevelValue.value = value;
-    updateEffectStyle(value);
-  });
-
-}
-
-// Применение эффекта
-function applyEffect() {
-  const selected = document.querySelector('input[name="effect"]:checked').value;
-  currentEffect = selected;
-
-  removeAllEffectClasses();
-
-  if (selected === 'none') {
-    previewImage.style.filter = '';
-    sliderContainer.classList.add('hidden');
-  } else {
-    previewImage.classList.add(`effects__preview--${selected}`);
-    const { range, step } = EFFECTS[selected];
-    effectSlider.noUiSlider.updateOptions({
-      range,
-      start: range.max,
-      step
+    document.addEventListener('keydown', e => {
+      if (isEscape(e)) {
+        this.hideOverlay();
+      }
     });
-    sliderContainer.classList.remove('hidden');
+  }
+
+  onFileSelected() {
+    const file = this.fileChooser.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewImage.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+    this.showOverlay();
+  }
+
+  showOverlay() {
+    this.overlay.classList.remove('hidden');
+    this.body.classList.add('modal-open');
+  }
+
+  hideOverlay() {
+    this.overlay.classList.add('hidden');
+    this.body.classList.remove('modal-open');
+    this.resetForm();
+  }
+
+  increaseScale() {
+    if (this.currentScale < 100) {
+      this.currentScale += 25;
+      this.updateScale();
+    }
+  }
+
+  decreaseScale() {
+    if (this.currentScale > 25) {
+      this.currentScale -= 25;
+      this.updateScale();
+    }
+  }
+
+  updateScale() {
+    this.scaleValue.value = `${this.currentScale}%`;
+    this.previewImage.style.transform = `scale(${this.currentScale / 100})`;
+  }
+
+  setupSlider() {
+    if (typeof noUiSlider === 'undefined') {
+      throw new Error("NoUiSlider library not found");
+    }
+
+    noUiSlider.create(this.effectSlider, {
+      range: { min: 0, max: 1 },
+      start: 1,
+      step: 0.1,
+      connect: 'lower'
+    });
+
+    this.effectSlider.noUiSlider.on('update', values => {
+      const value = parseFloat(values[0]);
+      this.effectLevelValue.value = value;
+      this.updateEffectStyle(value);
+    });
+  }
+
+  applyEffect() {
+    const selected = document.querySelector('input[name="effect"]:checked').value;
+    this.currentEffect = selected;
+
+    this.removeAllEffectClasses();
+
+    if (selected === 'none') {
+      this.previewImage.style.filter = '';
+      this.sliderContainer.classList.add('hidden');
+    } else {
+      this.previewImage.classList.add(`effects__preview--${selected}`);
+      const { range, step } = EFFECTS[selected];
+      this.effectSlider.noUiSlider.updateOptions({ range, start: range.max, step });
+      this.sliderContainer.classList.remove('hidden');
+    }
+  }
+
+  removeAllEffectClasses() {
+    this.previewImage.className = '';
+    this.previewImage.classList.add('img-upload__preview-image');
+  }
+
+  updateEffectStyle(value) {
+    if (this.currentEffect === 'none') {
+      this.previewImage.style.filter = '';
+      return;
+    }
+
+    const { filter, unit } = EFFECTS[this.currentEffect];
+    this.previewImage.style.filter = `${filter}(${value}${unit})`;
+  }
+
+  setupValidation() {
+    this.pristine = new Pristine(this.uploadForm, {
+      classTo: 'img-upload__field-wrapper',
+      errorTextParent: 'img-upload__field-wrapper',
+      errorTextClass: 'img-upload__error'
+    });
+
+    this.pristine.addValidator(
+      this.hashtagsInput,
+      this.validateHashtags.bind(this),
+      'Неверный формат хэштегов'
+    );
+  }
+
+  validateHashtags(value) {
+    if (!value.trim()) return true;
+
+    const hashtags = value.toLowerCase().trim().split(/\s+/);
+    const valid = hashtags.every(tag => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
+    const unique = new Set(hashtags).size === hashtags.length;
+    return hashtags.length <= 5 && valid && unique;
+  }
+
+  sendForm(event) {
+    event.preventDefault();
+    if (this.pristine.validate()) {
+      console.log('Форма прошла валидацию и готова к отправке!');
+      this.hideOverlay();
+    } else {
+      console.warn('Форма не прошла валидацию');
+    }
+  }
+
+  resetForm() {
+    this.uploadForm.reset();
+    this.currentScale = 100;
+    this.updateScale();
+    this.previewImage.style.filter = '';
+    this.removeAllEffectClasses();
+    this.sliderContainer.classList.add('hidden');
+    this.effectSlider.noUiSlider.set(1); // Возвращаем значение слайдера обратно к единице
   }
 }
 
-// Удаление классов эффектов
-function removeAllEffectClasses() {
-  previewImage.className = '';
-  previewImage.classList.add('img-upload__preview-image');
-}
-
-// Применение фильтра к изображению
-function updateEffectStyle(value) {
-  if (currentEffect === 'none') {
-    previewImage.style.filter = '';
-    return;
-  }
-
-  const { filter, unit } = EFFECTS[currentEffect];
-  previewImage.style.filter = `${filter}(${value}${unit})`;
-}
-
-// Валидация с помощью Pristine
-function setupValidation() {
-  const  pristine = new Pristine(document.querySelector('#upload-select-image'), {
-    classTo: 'img-upload__field-wrapper',
-    errorTextParent: 'img-upload__field-wrapper',
-    errorTextClass: 'img-upload__error'
-  });
-
-  pristine.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
-}
-
-// Валидация хэштегов
-function validateHashtags(value) {
-  if (!value) return true;
-
-  const hashtags = value.toLowerCase().trim().split(/\s+/);
-  const valid = hashtags.every(tag => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
-  const unique = new Set(hashtags).size === hashtags.length;
-  return hashtags.length <= 5 && valid && unique;
-}
-
-// Отправка формы
-function sendForm(event) {
-  event.preventDefault();
-  if (pristine.validate()) {
-    console.log('Форма прошла валидацию и готова к отправке!');
-    hideOverlay();
-  } else {
-    console.warn('Форма не прошла валидацию');
-  }
-}
-
-// Сброс формы
-function resetForm() {
-  document.querySelector('#upload-select-image').reset();
-  currentScale = 100;
-  updateScale();
-  previewImage.style.filter = '';
-  removeAllEffectClasses();
-  sliderContainer.classList.add('hidden');
-  effectSlider.noUiSlider.set(100);
-}
+// Инициализируем всё после полной загрузки страницы
+document.addEventListener('DOMContentLoaded', () => {
+  const imageUploader = new ImageUploader();
+  imageUploader.init();
+});
