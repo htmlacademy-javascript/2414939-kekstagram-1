@@ -1,5 +1,5 @@
 import { isEscape } from './utils.js';
-import noUiSlider from 'nouislider'; // Подключаем noUiSlider явно
+// import noUiSlider from 'nouislider'; // Подключаем noUiSlider явно
 
 // Эффекты с параметрами
 const EFFECTS = {
