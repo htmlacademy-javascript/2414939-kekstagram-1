@@ -156,7 +156,7 @@ function setupSlider() {
     connect: 'lower'
   });
 
-  effectSlider = sliderElement;
+  const effectSlider = sliderElement;
 
   sliderElement.noUiSlider.on('update', () => {
     const value = sliderElement.noUiSlider.get();
