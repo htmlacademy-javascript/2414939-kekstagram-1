@@ -306,48 +306,48 @@ const EFFECTS = {
   }
 };
 
-let fileChooser = null;
-let overlay = null;
-let body = null;
-let smallerBtn = null;
-let biggerBtn = null;
-let scaleValue = null;
-let previewImage = null;
-let effectsRadios = null;
-let sliderContainer = null;
-let effectSlider = null;
-let effectLevelValue = null;
-let hashtagsInput = null;
-let descriptionTextArea = null;
-let submitButton = null;
-let uploadForm = null;
+// let fileChooser = null;
+// let overlay = null;
+// let body = null;
+// let smallerBtn = null;
+// let biggerBtn = null;
+// let scaleValue = null;
+// let previewImage = null;
+// let effectsRadios = null;
+// let sliderContainer = null;
+// let effectSlider = null;
+// let effectLevelValue = null;
+// let hashtagsInput = null;
+// let descriptionTextArea = null;
+// let submitButton = null;
+// let uploadForm = null;
 
 let currentScale = 100;
-let pristine = null;
+// let pristine = null;
 let currentEffect = 'none';
 
-// Инициализация
-window.addEventListener('load', () => {
-  initializeElements();
-  setupEvents();
-});
+// // Инициализация
+// window.addEventListener('load', () => {
+//   initializeElements();
+//   setupEvents();
+// });
 
 // Получение элементов DOM
 function initializeElements() {
-  fileChooser = document.querySelector('#upload-file');
-  overlay = document.querySelector('.img-upload__overlay');
-  body = document.body;
-  smallerBtn = document.querySelector('.scale__control--smaller');
-  biggerBtn = document.querySelector('.scale__control--bigger');
-  scaleValue = document.querySelector('.scale__control--value');
-  previewImage = document.querySelector('.img-upload__preview > img');
-  effectsRadios = document.querySelectorAll('.effects__radio');
-  sliderContainer = document.querySelector('.effect-level');
-  effectLevelValue = document.querySelector('.effect-level__value');
-  hashtagsInput = document.querySelector('.text__hashtags');
-  descriptionTextArea = document.querySelector('.text__description');
-  submitButton = document.querySelector('#upload-submit');
-  uploadForm = document.querySelector('#upload-select-image');
+  const fileChooser = document.querySelector('#upload-file');
+  const overlay = document.querySelector('.img-upload__overlay');
+  const body = document.body;
+  const smallerBtn = document.querySelector('.scale__control--smaller');
+  const biggerBtn = document.querySelector('.scale__control--bigger');
+  const scaleValue = document.querySelector('.scale__control--value');
+  const previewImage = document.querySelector('.img-upload__preview > img');
+  const effectsRadios = document.querySelectorAll('.effects__radio');
+  const sliderContainer = document.querySelector('.effect-level');
+  const effectLevelValue = document.querySelector('.effect-level__value');
+  const hashtagsInput = document.querySelector('.text__hashtags');
+  const descriptionTextArea = document.querySelector('.text__description');
+  const submitButton = document.querySelector('#upload-submit');
+  const uploadForm = document.querySelector('#upload-select-image');
 }
 
 // Навешивание обработчиков
@@ -479,14 +479,15 @@ function updateEffectStyle(value) {
 
 // Валидация с помощью Pristine
 function setupValidation() {
-  pristine = new Pristine(document.querySelector('#upload-select-image'), {
+  const pristine = new Pristine(document.querySelector('#upload-select-image'), {
     classTo: 'img-upload__field-wrapper',
-    errorTextParent: 'img-upload__field-wrapper',
-    errorTextClass: 'img-upload__error'
+    errorClass: 'img-upload__field-wrapper--error',
+    errorTextParent: 'img-upload__field-wrapper'
   });
 
   pristine.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
 }
+
 
 // Валидация хэштегов
 function validateHashtags(value) {
