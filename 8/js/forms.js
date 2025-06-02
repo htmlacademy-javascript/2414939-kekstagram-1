@@ -48,6 +48,7 @@ let effectLevelValue = null;
 let hashtagsInput = null;
 let descriptionTextArea = null;
 let submitButton = null;
+let uploadForm = null;
 
 let currentScale = 100;
 let pristine = null;
@@ -74,6 +75,7 @@ function initializeElements() {
   hashtagsInput = document.querySelector('.text__hashtags');
   descriptionTextArea = document.querySelector('.text__description');
   submitButton = document.querySelector('#upload-submit');
+  uploadForm = document.querySelector('#upload-select-image');
 }
 
 // Навешивание обработчиков
@@ -83,7 +85,8 @@ function setupEvents() {
   smallerBtn.addEventListener('click', decreaseScale);
   biggerBtn.addEventListener('click', increaseScale);
   effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
-  document.querySelector('#upload-select-image').addEventListener('submit', (e) => sendForm(e));
+  // document.querySelector('#upload-select-image').addEventListener('submit', (e) => sendForm(e));
+  uploadForm.addEventListener('submit', (e) => sendForm(e));
 
   setupSlider();
   setupValidation();
