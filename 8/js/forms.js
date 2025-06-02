@@ -169,9 +169,9 @@ function updateEffectStyle(value) {
 // Валидация
 function setupValidation() {
   pristineInstance = new Pristine(uploadForm,{
-    classTo:'img-upload__field-wrapper',
-    errorTextParent:'img-upload__field-wrapper',
-    errorTextClass:'img-upload__error'
+    classTo: 'img-upload__field-wrapper',
+    errorClass: 'img-upload__field-wrapper--error',
+    errorTextParent: 'img-upload__field-wrapper'
   });
 
   pristineInstance.addValidator(
