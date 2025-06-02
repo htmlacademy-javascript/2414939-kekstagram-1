@@ -1,249 +1,212 @@
 import { isEscape } from './utils.js';
 
-// Эффекты с параметрами
-const EFFECTS = {
-  chrome: {
-    filter: 'grayscale',
-    unit: '',
-    range: { min: 0, max: 1 },
-    step: 0.1
-  },
-  sepia: {
-    filter: 'sepia',
-    unit: '',
-    range: { min: 0, max: 1 },
-    step: 0.1
-  },
-  marvin: {
-    filter: 'invert',
-    unit: '%',
-    range: { min: 0, max: 100 },
-    step: 1
-  },
-  phobos: {
-    filter: 'blur',
-    unit: 'px',
-    range: { min: 0, max: 3 },
-    step: 0.1
-  },
-  heat: {
-    filter: 'brightness',
-    unit: '',
-    range: { min: 1, max: 3 },
-    step: 0.1
-  }
-};
-
-let fileChooser = null;
-let overlay = null;
-let body = null;
-let smallerBtn = null;
-let biggerBtn = null;
-let scaleValue = null;
-let previewImage = null;
-let effectsRadios = null;
-let sliderContainer = null;
-let effectSlider = null;
-let effectLevelValue = null;
-let hashtagsInput = null;
-let descriptionTextArea = null;
-let submitButton = null;
+// Переменные для элементов
 let uploadForm = null;
-
-let currentScale = 100;
 let pristine = null;
-let currentEffect = 'none';
+let overlay = document.querySelector('.img-upload__overlay');
+const fileInput = document.querySelector('#upload-file');
+const closeButton = document.querySelector('#upload-cancel');
+const submitButton = document.querySelector('#upload-submit');
+const previewImage = document.querySelector('.img-upload__preview img');
+const effectLevelSliderContainer = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectsRadioButtons = document.querySelectorAll('.effects__radio');
 
-// Инициализация
-window.addEventListener('load', () => {
-  initializeElements();
-  setupEvents();
-});
+const scaleControlSmaller = document.querySelector('.scale__control--smaller');
+const scaleControlBigger = document.querySelector('.scale__control--bigger');
+const scaleValueInput = document.querySelector('.scale__control--value');
 
-// Получение элементов DOM
+let effectSlider; // переменная для noUiSlider
+
+// Инициализация элементов и Pristine
 function initializeElements() {
-  fileChooser = document.querySelector('#upload-file');
-  overlay = document.querySelector('.img-upload__overlay');
-  body = document.body;
-  smallerBtn = document.querySelector('.scale__control--smaller');
-  biggerBtn = document.querySelector('.scale__control--bigger');
-  scaleValue = document.querySelector('.scale__control--value');
-  previewImage = document.querySelector('.img-upload__preview > img');
-  effectsRadios = document.querySelectorAll('.effects__radio');
-  sliderContainer = document.querySelector('.effect-level');
-  effectLevelValue = document.querySelector('.effect-level__value');
-  hashtagsInput = document.querySelector('.text__hashtags');
-  descriptionTextArea = document.querySelector('.text__description');
-  submitButton = document.querySelector('#upload-submit');
   uploadForm = document.querySelector('#upload-select-image');
-}
 
-// Навешивание обработчиков
-function setupEvents() {
-  fileChooser.addEventListener('change', onFileSelected);
-  document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
-  smallerBtn.addEventListener('click', decreaseScale);
-  biggerBtn.addEventListener('click', increaseScale);
-  effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
-  // document.querySelector('#upload-select-image').addEventListener('submit', (e) => sendForm(e));
-  uploadForm.addEventListener('submit', (e) => sendForm(e));
-
-  setupSlider();
-  setupValidation();
-
-  document.addEventListener('keydown', (e) => {
-    if (isEscape(e)) {
-      hideOverlay();
-    }
+  // Инициализация Pristine
+  pristine = new Pristine(uploadForm, {
+    classTo: 'img-upload__field-wrapper',
+    errorClass: 'img-upload__field-wrapper--error',
+    errorTextParent: 'img-upload__field-wrapper'
   });
 }
 
-// Отображение окна загрузки
-function onFileSelected() {
-  const file = fileChooser.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      previewImage.src = reader.result;
-    };
-    reader.readAsDataURL(file);
-  }
-  showOverlay();
-}
-
-// Отображение формы
+// Открытие оверлея
 function showOverlay() {
   overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
+
+  // Обработчики закрытия по Escape
+  document.addEventListener('keydown', onDocumentKeyDown);
 }
 
-// Скрытие формы
+// Скрытие оверлея
 function hideOverlay() {
   overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
+
+  // Очистка формы и сброс эффектов
   resetForm();
+
+  // Удаление обработчиков
+  document.removeEventListener('keydown', onDocumentKeyDown);
 }
 
-// Увеличение масштаба
-function increaseScale() {
-  if (currentScale < 100) {
-    currentScale += 25;
-    updateScale();
+// Обработчик нажатия клавиш для закрытия по Escape
+function onDocumentKeyDown(evt) {
+  if (isEscape(evt)) {
+    hideOverlay();
   }
 }
 
-// Уменьшение масштаба
-function decreaseScale() {
-  if (currentScale > 25) {
-    currentScale -= 25;
-    updateScale();
-  }
-}
+// Обработка выбора файла (открытие)
+fileInput.addEventListener('change', () => {
+  showOverlay();
+});
 
-// Применение масштаба
-function updateScale() {
-  scaleValue.value = `${currentScale}%`;
-  previewImage.style.transform = `scale(${currentScale / 100})`;
-}
+// Обработка закрытия формы
+closeButton.addEventListener('click', () => {
+  hideOverlay();
+});
 
-// Настройка слайдера
-function setupSlider() {
-  const sliderElement = document.querySelector('.effect-level__slider');
-  noUiSlider.create(sliderElement, {
-    range: { min: 0, max: 1 },
-    start: 1,
-    step: 0.1,
-    connect: 'lower'
-  });
+// Обработка отправки формы
+uploadForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-  effectSlider = sliderElement;
-
-  sliderElement.noUiSlider.on('update', () => {
-    const value = sliderElement.noUiSlider.get();
-    effectLevelValue.value = value;
-    updateEffectStyle(value);
-  });
-
-}
-
-// Применение эффекта
-function applyEffect() {
-  const selected = document.querySelector('input[name="effect"]:checked').value;
-  currentEffect = selected;
-
-  removeAllEffectClasses();
-
-  if (selected === 'none') {
-    previewImage.style.filter = '';
-    sliderContainer.classList.add('hidden');
-  } else {
-    previewImage.classList.add(`effects__preview--${selected}`);
-    const { range, step } = EFFECTS[selected];
-    effectSlider.noUiSlider.updateOptions({
-      range,
-      start: range.max,
-      step
-    });
-    sliderContainer.classList.remove('hidden');
-  }
-}
-
-// Удаление классов эффектов
-function removeAllEffectClasses() {
-  previewImage.className = '';
-  previewImage.classList.add('img-upload__preview-image');
-}
-
-// Применение фильтра к изображению
-function updateEffectStyle(value) {
-  if (currentEffect === 'none') {
-    previewImage.style.filter = '';
-    return;
-  }
-
-  const { filter, unit } = EFFECTS[currentEffect];
-  previewImage.style.filter = `${filter}(${value}${unit})`;
-}
-
-// Валидация с помощью Pristine
-function setupValidation() {
-  pristine = new Pristine(document.querySelector('#upload-select-image'), {
-    classTo: 'img-upload__field-wrapper',
-    errorTextParent: 'img-upload__field-wrapper',
-    errorTextClass: 'img-upload__error'
-  });
-
-  pristine.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
-}
-
-// Валидация хэштегов
-function validateHashtags(value) {
-  if (!value) return true;
-
-  const hashtags = value.toLowerCase().trim().split(/\s+/);
-  const valid = hashtags.every(tag => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
-  const unique = new Set(hashtags).size === hashtags.length;
-  return hashtags.length <= 5 && valid && unique;
-}
-
-// Отправка формы
-function sendForm(event) {
-  event.preventDefault();
   if (pristine.validate()) {
     console.log('Форма прошла валидацию и готова к отправке!');
     hideOverlay();
+    // Тут можно добавить реальную отправку данных
   } else {
     console.warn('Форма не прошла валидацию');
   }
+});
+
+// Функция сброса формы и эффектов
+function resetForm() {
+  uploadForm.reset();
+
+  // Сброс эффектов и стилей изображения
+  removeAllEffectClasses();
+
+  previewImage.style.transform = '';
+
+  // Сброс масштаба
+  scaleValueInput.value = '100%';
+
+  // Удаление слайдера эффекта, если есть
+  if (effectSlider) {
+    effectSlider.noUiSlider.destroy();
+    effectSlider = null;
+    effectLevelSliderContainer.style.display = 'none';
+    effectLevelValue.value = '';
+  }
 }
 
-// Сброс формы
-function resetForm() {
-  document.querySelector('#upload-select-image').reset();
-  currentScale = 100;
-  updateScale();
-  previewImage.style.filter = '';
-  removeAllEffectClasses();
-  sliderContainer.classList.add('hidden');
-  effectSlider.noUiSlider.set(100);
+// Удаление всех классов эффектов
+function removeAllEffectClasses() {
+  previewImage.className = 'img-upload__preview-img'; // или другой базовый класс, если есть
 }
+
+// Обработка выбора эффекта радиокнопками
+effectsRadioButtons.forEach((radio) => {
+  radio.addEventListener('change', () => {
+    const selectedEffect = radio.value;
+
+    removeAllEffectClasses();
+
+    if (selectedEffect !== 'none') {
+      previewImage.classList.add(`effects__preview--${selectedEffect}`);
+
+      const { range, step } = EFFECTS[selectedEffect];
+
+      // Создаем или обновляем слайдер эффекта
+      if (!effectSlider) {
+        effectLevelSliderContainer.style.display = 'block';
+        effectSlider = noUiSlider.create(effectLevelSliderContainer, {
+          range,
+          start: range.max,
+          step,
+          connect: 'lower'
+        });
+
+        effectSlider.on('update', () => {
+          const value = effectSlider.get();
+          effectLevelValue.value = value;
+
+          // Применяем эффект к изображению (пример)
+          previewImage.style.filter = getFilterString(selectedEffect, value);
+        });
+      } else {
+        effectSlider.noUiSlider.updateOptions({ range, start: range.max, step });
+        effectLevelValue.value = range.max;
+        previewImage.style.filter = getFilterString(selectedEffect, range.max);
+      }
+
+    } else {
+      // Если выбран эффект "none"
+      if (effectSlider) {
+        effectSlider.noUiSlider.destroy();
+        effectSlider = null;
+      }
+      effectLevelSliderContainer.style.display = 'none';
+      previewImage.style.filter = '';
+    }
+
+    // Обновляем класс изображения для эффекта (если нужно)
+
+  });
+});
+
+// Функция получения CSS фильтра по эффекту и значению
+function getFilterString(effectName, value) {
+  switch (effectName) {
+    case 'chrome':
+      return `grayscale(${value})`;
+    case 'sepia':
+      return `sepia(${value})`;
+    case 'marvin':
+      return `invert(${value}%)`;
+    case 'phobos':
+      return `blur(${value}px)`;
+    case 'heat':
+      return `brightness(${value})`;
+    default:
+      return '';
+  }
+}
+
+// Константы эффектов с диапазонами и шагами
+const EFFECTS = {
+  chrome: { range: { min:0, max:1 }, step:0.1 },
+  sepia: { range: { min:0, max:1 }, step:0.1 },
+  marvin: { range: { min:0, max:100 }, step:1 },
+  phobos: { range: { min:0, max:3 }, step:0.1 },
+  heat: { range: { min:1, max:3 }, step:0.1 }
+};
+
+// Масштабирование изображения
+scaleControlSmaller.addEventListener('click', () => {
+  let currentScalePercent = parseInt(scaleValueInput.value);
+
+  if (currentScalePercent >10) {
+    currentScalePercent -=10;
+    scaleValueInput.value= `${currentScalePercent}%`;
+
+    previewImage.style.transform= `scale(${currentScalePercent/100})`;
+  }
+});
+
+scaleControlBigger.addEventListener('click', () => {
+  let currentScalePercent= parseInt(scaleValueInput.value);
+
+  if(currentScalePercent<100){
+    currentScalePercent+=10;
+    scaleValueInput.value= `${currentScalePercent}%`;
+
+    previewImage.style.transform= `scale(${currentScalePercent/100})`;
+   }
+});
+
+// Инициализация при загрузке страницы
+initializeElements();
+
