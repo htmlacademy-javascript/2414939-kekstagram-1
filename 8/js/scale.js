@@ -12,7 +12,7 @@ const smallerBtn = document.querySelector('.scale__control--smaller');
 const biggerBtn = document.querySelector('.scale__control--bigger');
 
 // Функция обновления отображения масштаба
-function updateScale() {
+export function updateScale() {
   scaleValue.value = `${scaleState.currentScale}%`;
   previewImage.style.transform = `scale(${scaleState.currentScale / 100})`;
 }
