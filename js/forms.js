@@ -1,5 +1,5 @@
 // forms.js
-import { scaleState } from './scale.js';
+import { scaleState, updateScale } from './scale.js';
 
 // Предположим, у вас есть форма и функция сброса формы
 const uploadForm = document.querySelector('.img-upload__form');
@@ -9,11 +9,10 @@ function resetForm() {
 
   // Сброс масштаба через изменение состояния и обновление отображения
   scaleState.currentScale = 100;
+  updateScale();
   // Вызов функции обновления масштаба из scale.js
   // Для этого нужно импортировать функцию updateScale()
 }
-
-import { updateScale } from './scale.js';
 
 function onReset() {
   resetForm();
