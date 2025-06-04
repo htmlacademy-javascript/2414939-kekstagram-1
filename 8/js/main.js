@@ -6,7 +6,7 @@ import './form.js';
 // import { showOverlay, hideOverlay } from './form.js';
 import { initScaleHandlers } from './scale.js';
 import { initSlider, applyEffect } from './slider.js';
-import { isEscape } from './utils.js'; // убедитесь, что есть такой файл и функция
+import { isEscape } from './utils.js';
 
 // Генерация данных фотографий
 const photosData = generatePhotosData();

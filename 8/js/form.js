@@ -1,13 +1,13 @@
-import { isEscape } from './utils.js';
-import { initScaleHandlers } from './scale.js';
-import { initSlider, applyEffect } from './slider.js';
+import { isEscape } from '/utils.js';
+import { initScaleHandlers } from '/scale.js';
+import { initSlider, applyEffect } from '/slider.js';
 
 const uploadForm = document.querySelector('#upload-select-image');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const descriptionTextArea = document.querySelector('.text__description');
 const submitButton = document.querySelector('#upload-submit');
 
-import Pristine from 'pristinejs'; // убедитесь что подключена библиотека
+import Pristine from 'pristinejs';
 
 // Валидация хэштегов
 function validateHashtags(value) {
@@ -35,7 +35,7 @@ function sendForm(e) {
 
   if (pristineInstance.validate()) {
     console.log('Форма прошла валидацию и готова к отправке!');
-    // Тут можно добавить отправку данных на сервер или другую логику
+
   } else{
     console.warn('Форма не прошла валидацию');
   }
@@ -46,7 +46,7 @@ export function initFormHandlers() {
   uploadForm.addEventListener('submit', sendForm);
 }
 
-// Экспортируем функцию для открытия и закрытия overlay (если нужно)
+// Экспортируем функцию для открытия и закрытия overlay
 export function showOverlay() {
   const overlay = document.querySelector('.img-upload__overlay');
   overlay.classList.remove('hidden');
