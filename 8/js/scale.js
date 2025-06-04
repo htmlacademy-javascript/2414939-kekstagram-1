@@ -1,4 +1,3 @@
-// scale.js
 import { isEscape } from './utils.js';
 
 // Объект состояния масштаба

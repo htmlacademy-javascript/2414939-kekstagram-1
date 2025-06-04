@@ -1,4 +1,3 @@
-// slider.js
 import { isEscape } from './utils.js';
 
 // Константа с предустановленными эффектами
