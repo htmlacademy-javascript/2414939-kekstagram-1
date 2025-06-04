@@ -41,4 +41,4 @@ biggerBtn.addEventListener('click', increaseScale);
 // Инициализация начального отображения
 updateScale();
 
-export { increaseScale, decreaseScale, updateScale, scaleState };
+export { increaseScale, decreaseScale, updateScale};
