@@ -53,12 +53,12 @@ const uploadForm = document.querySelector('#upload-select-image');
 
 let currentScale = 100;
 let currentEffect = 'none';
-let pristineInstance = null;
+// let pristineInstance = null;
 
 // Инициализация слайдера
-if (typeof noUiSlider === 'undefined') {
-  throw new Error('NoUiSlider library not found');
-}
+// if (typeof noUiSlider === 'undefined') {
+//   throw new Error('NoUiSlider library not found');
+// }
 
 noUiSlider.create(effectSliderElement, {
   range: { min: 0, max: 1 },
@@ -73,16 +73,6 @@ effectSliderElement.noUiSlider.on('update', (values) => {
   updateEffectStyle(value);
 });
 
-// Обработчики событий
-fileChooser.addEventListener('change', onFileSelected);
-document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
-smallerBtn.addEventListener('click', decreaseScale);
-biggerBtn.addEventListener('click', increaseScale);
-effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
-uploadForm.addEventListener('submit', sendForm);
-document.addEventListener('keydown', (e) => {
-  if (isEscape(e)) hideOverlay();
-});
 
 // Функции
 
@@ -167,19 +157,17 @@ function updateEffectStyle(value) {
 }
 
 // Валидация
-function setupValidation() {
-  pristineInstance = new Pristine(uploadForm,{
-    classTo: 'img-upload__field-wrapper',
-    errorClass: 'img-upload__field-wrapper--error',
-    errorTextParent: 'img-upload__field-wrapper'
-  });
+const pristineInstance = new Pristine(uploadForm,{
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper'
+});
 
-  pristineInstance.addValidator(
-    hashtagsInput,
-    validateHashtags,
-    'Неверный формат хэштегов'
-  );
-}
+pristineInstance.addValidator(
+  hashtagsInput,
+  validateHashtags,
+  'Неверный формат хэштегов'
+);
 
 // Валидация хэштегов
 function validateHashtags(value) {
@@ -217,3 +205,14 @@ function resetForm() {
   // Возвращаем слайдер к начальному значению
   effectSliderElement.noUiSlider.set(effectSliderElement.noUiSlider.options.start);
 }
+
+// Обработчики событий
+fileChooser.addEventListener('change', onFileSelected);
+document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
+smallerBtn.addEventListener('click', decreaseScale);
+biggerBtn.addEventListener('click', increaseScale);
+effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
+uploadForm.addEventListener('submit', sendForm);
+document.addEventListener('keydown', (e) => {
+  if (isEscape(e)) hideOverlay();
+});
