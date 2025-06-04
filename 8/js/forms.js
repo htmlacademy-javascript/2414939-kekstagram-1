@@ -9,6 +9,7 @@ const hashtagsInput = document.querySelector('.text__hashtags');
 const descriptionTextArea = document.querySelector('.text__description');
 const submitButton = document.querySelector('#upload-submit');
 const uploadForm = document.querySelector('#upload-select-image');
+const previewImage = document.querySelector('.img-upload__preview img');
 
 let pristineInstance = null;
 
