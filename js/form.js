@@ -1,6 +1,6 @@
-import { isEscape } from 'utils.js';
-import { initScaleHandlers } from 'scale.js';
-import { initSlider, applyEffect } from 'slider.js';
+import { isEscape } from './utils.js';
+import { initScaleHandlers } from './scale.js';
+import { initSlider, applyEffect } from './slider.js';
 
 const uploadForm = document.querySelector('#upload-select-image');
 const hashtagsInput = document.querySelector('.text__hashtags');

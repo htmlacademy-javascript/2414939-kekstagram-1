@@ -1,11 +1,9 @@
-// js/main.js
-
 import { generatePhotosData } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
 import './form.js';
 
-import { showOverlay, hideOverlay } from './form.js';
+// import { showOverlay, hideOverlay } from './form.js';
 import { initScaleHandlers } from './scale.js';
 import { initSlider, applyEffect } from './slider.js';
 import { isEscape } from './utils.js'; // убедитесь, что есть такой файл и функция
