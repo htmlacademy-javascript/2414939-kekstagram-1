@@ -42,3 +42,4 @@ biggerBtn.addEventListener('click', increaseScale);
 updateScale();
 
 export { increaseScale, decreaseScale, updateScale};
+export { previewImage };
