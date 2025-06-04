@@ -1,4 +1,4 @@
-import { previewImage } from 'utils.js';
+import { previewImage } from './utils.js';
 
 const effectSliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
