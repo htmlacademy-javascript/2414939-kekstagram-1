@@ -1,4 +1,4 @@
-import { Pristine } from './utils.js';
+import { Pristine } from '../pristine.min.js';
 
 const uploadForm = document.querySelector('#upload-select-image');
 const hashtagsInput = document.querySelector('.text__hashtags');
