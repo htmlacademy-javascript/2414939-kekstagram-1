@@ -1,6 +1,6 @@
-import { isEscape } from './utils.js';
-import { initScaleHandlers } from './scale.js';
-import { initSlider, applyEffect } from './slider.js';
+import { isEscape } from 'utils.js';
+import { initScaleHandlers } from 'scale.js';
+import { initSlider, applyEffect } from 'slider.js';
 
 const uploadForm = document.querySelector('#upload-select-image');
 const hashtagsInput = document.querySelector('.text__hashtags');
@@ -17,7 +17,7 @@ function validateHashtags(value) {
   const validTags = hashtags.every((tag) => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
   const uniqueTagsCount = new Set(hashtags).size === hashtags.length;
 
-  return hashtags.length <=5 && validTags && uniqueTagsCount;
+  return hashtags.length <= 5 && validTags && uniqueTagsCount;
 }
 
 // Инициализация Pristine
