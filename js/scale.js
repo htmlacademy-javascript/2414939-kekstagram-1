@@ -1,4 +1,4 @@
-import { previewImage, currentScale, updateScale } from './utils.js';
+import { previewImage, currentScale, updateScale } from '/utils.js';
 
 const smallerBtn = document.querySelector('.scale__control--smaller');
 const biggerBtn = document.querySelector('.scale__control--bigger');

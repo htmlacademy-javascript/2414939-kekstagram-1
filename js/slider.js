@@ -1,12 +1,12 @@
-import { previewImage } from './utils.js';
+import { previewImage } from '/utils.js';
 
 const effectSliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.effect-level');
 
-import noUiSlider from 'nouislider'; // убедитесь, что библиотека подключена
+import noUiSlider from 'nouislider';
 
-// Объект эффектов (можно импортировать или оставить здесь)
+// Объект эффектов
 const EFFECTS = {
   chrome: {
     filter: 'grayscale',
