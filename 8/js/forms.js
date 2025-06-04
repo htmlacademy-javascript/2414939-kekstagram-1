@@ -216,3 +216,4 @@ uploadForm.addEventListener('submit', sendForm);
 document.addEventListener('keydown', (e) => {
   if (isEscape(e)) hideOverlay();
 });
+
