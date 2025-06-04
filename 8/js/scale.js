@@ -1,7 +1,7 @@
-import { previewImage, currentScale, updateScale } from '/utils.js';
-
 const smallerBtn = document.querySelector('.scale__control--smaller');
 const biggerBtn = document.querySelector('.scale__control--bigger');
+const scaleValue = document.querySelector('.scale__control--value');
+const previewImage = document.querySelector('.img-upload__preview > img');
 
 let currentScale = 100;
 
@@ -20,16 +20,9 @@ function decreaseScale() {
 }
 
 function updateScale() {
-  const scaleValue = document.querySelector('.scale__control--value');
   scaleValue.value = `${currentScale}%`;
   previewImage.style.transform = `scale(${currentScale / 100})`;
 }
 
-// Экспортируем функции для использования в основном файле
-export { increaseScale, decreaseScale, updateScale, currentScale };
-
-// Инициализация обработчиков
-export function initScaleHandlers() {
-  smallerBtn.addEventListener('click', decreaseScale);
-  biggerBtn.addEventListener('click', increaseScale);
-}
+smallerBtn.addEventListener('click', decreaseScale);
+biggerBtn.addEventListener('click', increaseScale);
