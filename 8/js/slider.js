@@ -1,40 +1,107 @@
-// import { Pristine } from '../pristine.min.js';
+// slider.js
+import { isEscape } from './utils.js';
 
-const uploadForm = document.querySelector('#upload-select-image');
-const hashtagsInput = document.querySelector('.text__hashtags');
-const descriptionTextArea = document.querySelector('.text__description');
-const submitButton = document.querySelector('#upload-submit');
+// Константа с предустановленными эффектами
+const EFFECTS = {
+  chrome: {
+    filter: 'grayscale',
+    unit: '',
+    range: { min: 0, max: 1 },
+    step: 0.1
+  },
+  sepia: {
+    filter: 'sepia',
+    unit: '',
+    range: { min: 0, max: 1 },
+    step: 0.1
+  },
+  marvin: {
+    filter: 'invert',
+    unit: '%',
+    range: { min: 0, max: 100 },
+    step: 1
+  },
+  phobos: {
+    filter: 'blur',
+    unit: 'px',
+    range: { min: 0, max: 3 },
+    step: 0.1
+  },
+  heat: {
+    filter: 'brightness',
+    unit: '',
+    range: { min: 1, max: 3 },
+    step: 0.1
+  }
+};
 
-const pristineInstance = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper'
+// Глобальные переменные
+const previewImage = document.querySelector('.img-upload__preview > img');
+const effectsRadios = Array.from(document.querySelectorAll('.effects__radio'));
+const sliderContainer = document.querySelector('.effect-level');
+const effectSliderElement = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+
+let currentEffect = 'none';
+
+// Инициализация слайдера
+if (typeof noUiSlider === 'undefined') {
+  throw new Error('NoUiSlider library not found');
+}
+
+noUiSlider.create(effectSliderElement, {
+  range: { min: 0, max: 1 },
+  start: 1,
+  step: 0.1,
+  connect: 'lower'
 });
 
-pristineInstance.addValidator(
-  hashtagsInput,
-  validateHashtags,
-  'Неверный формат хэштегов'
-);
+effectSliderElement.noUiSlider.on('update', (values) => {
+  const value = parseFloat(values[0]);
+  effectLevelValue.value = value;
+  updateEffectStyle(value);
+});
 
-function validateHashtags(value) {
-  if (!value.trim()) return true;
+// Функция для установки выбранного эффекта
+function applyEffect() {
+  const selected = document.querySelector('input[name="effect"]:checked').value;
+  currentEffect = selected;
 
-  const hashtags = value.toLowerCase().trim().split(/\s+/);
-  const valid = hashtags.every((tag) => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
-  const unique = new Set(hashtags).size === hashtags.length;
+  removeAllEffectClasses();
 
-  return hashtags.length <= 5 && valid && unique;
-}
-
-function sendForm(e) {
-  e.preventDefault();
-
-  if (pristineInstance.validate()) {
-    console.log('Форма прошла валидацию и готова к отправке!');
-  } else {
-    console.warn('Форма не прошла валидацию');
+  if (selected === 'none') {
+    previewImage.style.filter = '';
+    sliderContainer.classList.add('hidden');
+    return;
   }
+
+  previewImage.classList.add(`effects__preview--${selected}`);
+
+  const { range, step } = EFFECTS[selected];
+
+  effectSliderElement.noUiSlider.updateOptions({ range, start: range.max, step });
+
+  sliderContainer.classList.remove('hidden');
 }
 
-uploadForm.addEventListener('submit', sendForm);
+// Удаляет все классы эффектов
+function removeAllEffectClasses() {
+  previewImage.className = '';
+  previewImage.classList.add('img-upload__preview-image');
+}
+
+// Применяет новый эффект на основании значения слайдера
+function updateEffectStyle(value) {
+  if (currentEffect === 'none') {
+    previewImage.style.filter = '';
+    return;
+  }
+
+  const { filter, unit } = EFFECTS[currentEffect];
+  previewImage.style.filter = `${filter}(${value}${unit})`;
+}
+
+// Регистрируем обработчики для переключения эффектов
+effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
+
+export { applyEffect, removeAllEffectClasses, updateEffectStyle };
