@@ -11,6 +11,8 @@ const descriptionTextArea = document.querySelector('.text__description');
 const submitButton = document.querySelector('#upload-submit');
 const uploadForm = document.querySelector('#upload-select-image');
 
+let currentScale = 100;
+let currentEffect = 'none';
 let pristineInstance = null;
 
 // Валидация хэштегов
