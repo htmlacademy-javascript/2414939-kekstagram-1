@@ -1,4 +1,3 @@
-ч
 // forms.js
 import { isEscape } from './utils.js';
 
