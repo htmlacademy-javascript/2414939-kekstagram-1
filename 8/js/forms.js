@@ -2,6 +2,7 @@ import { isEscape } from './utils.js';
 import { previewImage } from './scale.js';
 import { scaleState } from './scale.js';
 import { updateScale } from './scale.js';
+import {removeAllEffectClasses} from 'slider.js';
 
 // Глобальные переменные
 const fileChooser = document.querySelector('#upload-file');
