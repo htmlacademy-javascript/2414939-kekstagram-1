@@ -1,24 +1,126 @@
-// forms.js
-import { scaleState, updateScale } from './scale.js';
+// // forms.js
+// import { scaleState, updateScale } from './scale.js';
 
-// Предположим, у вас есть форма и функция сброса формы
-const uploadForm = document.querySelector('.img-upload__form');
+// // Предположим, у вас есть форма и функция сброса формы
+// const uploadForm = document.querySelector('.img-upload__form');
 
-function resetForm() {
-  uploadForm.reset();
+// function resetForm() {
+//   uploadForm.reset();
 
-  // Сброс масштаба через изменение состояния и обновление отображения
-  scaleState.currentScale = 100;
-  updateScale();
-  // Вызов функции обновления масштаба из scale.js
-  // Для этого нужно импортировать функцию updateScale()
+//   // Сброс масштаба через изменение состояния и обновление отображения
+//   scaleState.currentScale = 100;
+//   updateScale();
+//   // Вызов функции обновления масштаба из scale.js
+//   // Для этого нужно импортировать функцию updateScale()
+// }
+
+// function onReset() {
+//   resetForm();
+// }
+
+// // Например, при закрытии модального окна или по событию сброса формы:
+// document.querySelector('.some-reset-button').addEventListener('click', onReset);
+
+// // Или вызовите resetForm() в нужный момент
+
+
+import { isEscape } from './utils.js';
+
+// Глобальные переменные
+const fileChooser = document.querySelector('#upload-file');
+const overlay = document.querySelector('.img-upload__overlay');
+const body = document.body;
+const hashtagsInput = document.querySelector('.text__hashtags');
+const descriptionTextArea = document.querySelector('.text__description');
+const submitButton = document.querySelector('#upload-submit');
+const uploadForm = document.querySelector('#upload-select-image');
+
+let pristineInstance = null;
+
+// Валидация хэштегов
+function validateHashtags(value) {
+  if (!value.trim()) return true;
+
+  const hashtags = value.toLowerCase().trim().split(/\s+/);
+  const valid = hashtags.every((tag) => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
+  const unique = new Set(hashtags).size === hashtags.length;
+
+  return hashtags.length <= 5 && valid && unique;
 }
 
-function onReset() {
+// Настройка валидации формы
+function setupValidation() {
+  pristineInstance = new Pristine(uploadForm, {
+    classTo: 'img-upload__field-wrapper',
+    errorClass: 'img-upload__field-wrapper--error',
+    errorTextParent: 'img-upload__field-wrapper'
+  });
+
+  pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
+}
+
+// Обработчик загрузки файла
+function onFileSelected() {
+  const file = fileChooser.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      previewImage.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  showOverlay();
+}
+
+// Показывает окно формы
+function showOverlay() {
+  overlay.classList.remove('hidden');
+  body.classList.add('modal-open');
+}
+
+// Скрывает окно формы
+function hideOverlay() {
+  overlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+
   resetForm();
 }
 
-// Например, при закрытии модального окна или по событию сброса формы:
-document.querySelector('.some-reset-button').addEventListener('click', onReset);
+// Отправляет форму
+function sendForm(e) {
+  e.preventDefault();
 
-// Или вызовите resetForm() в нужный момент
+  if (pristineInstance.validate()) {
+    console.log('Форма прошла валидацию и готова к отправке!');
+
+    hideOverlay();
+  } else {
+    console.warn('Форма не прошла валидацию');
+  }
+}
+
+// Сбрасывает форму
+function resetForm() {
+  uploadForm.reset();
+  currentScale = 100;
+  updateScale();
+  previewImage.style.filter = '';
+  removeAllEffectClasses();
+  sliderContainer.classList.add('hidden');
+
+  // Возвращаем слайдер к начальному значению
+  effectSliderElement.noUiSlider.set(effectSliderElement.noUiSlider.options.start);
+}
+
+// Регистрируем обработчики событий
+fileChooser.addEventListener('change', onFileSelected);
+document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
+uploadForm.addEventListener('submit', sendForm);
+document.addEventListener('keydown', (e) => {
+  if (isEscape(e)) hideOverlay();
+});
+
+setupValidation();
+
+export { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm };
