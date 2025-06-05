@@ -3,7 +3,7 @@ import { previewImage } from './scale.js';
 import { scaleState } from './scale.js';
 import { updateScale } from './scale.js';
 import { removeAllEffectClasses} from './slider.js';
-import {sliderContainer} from './slider';
+import {sliderContainer} from './slider.js';
 
 // Глобальные переменные
 const fileChooser = document.querySelector('#upload-file');
