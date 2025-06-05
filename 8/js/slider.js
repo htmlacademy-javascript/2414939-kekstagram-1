@@ -103,4 +103,4 @@ function updateEffectStyle(value) {
 // Регистрируем обработчики для переключения эффектов
 effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
 
-export { applyEffect, removeAllEffectClasses, updateEffectStyle, sliderContainer };
+export { applyEffect, removeAllEffectClasses, updateEffectStyle, sliderContainer, effectSliderElement, effectLevelValue };

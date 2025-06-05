@@ -4,8 +4,9 @@ import { scaleState } from './scale.js';
 import { updateScale } from './scale.js';
 import { removeAllEffectClasses} from './slider.js';
 import {sliderContainer} from './slider.js';
+import {effectLevelValue} from './slider.js';
+import {effectSliderElement} from './slider.js';
 
-// Глобальные переменные
 const fileChooser = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.body;
