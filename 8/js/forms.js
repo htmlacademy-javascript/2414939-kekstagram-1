@@ -31,15 +31,17 @@ function validateHashtags(value) {
 }
 
 // Настройка валидации формы
-function setupValidation() {
-  pristineInstance = new Pristine(uploadForm, {
-    classTo: 'img-upload__field-wrapper',
-    errorClass: 'img-upload__field-wrapper--error',
-    errorTextParent: 'img-upload__field-wrapper'
-  });
+const pristineInstance = new Pristine(uploadForm,{
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper'
+});
 
-  pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
-}
+pristineInstance.addValidator(
+  hashtagsInput,
+  validateHashtags,
+  'Неверный формат хэштегов'
+);
 
 // Обработчик загрузки файла
 function onFileSelected() {
