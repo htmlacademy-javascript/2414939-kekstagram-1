@@ -1,6 +1,6 @@
 import { isEscape } from './utils.js';
 
-import { previewImage, updateScale } from './scale.js';
+import { previewImage, updateScale, DEFAULT_SCALE } from './scale.js';
 
 import {
   removeAllEffectClasses,
@@ -16,7 +16,7 @@ const hashtagsInput = document.querySelector('.text__hashtags');
 // const submitButton = document.querySelector('#upload-submit');
 const uploadForm = document.querySelector('#upload-select-image');
 
-let currentScale = 100;
+let currentScale = DEFAULT_SCALE;
 // let currentEffect = 'none';
 // let pristineInstance = null;
 
@@ -96,7 +96,7 @@ function sendForm(e) {
 // Сбрасывает форму
 function resetForm() {
   uploadForm.reset();
-  currentScale = 100;
+  currentScale = DEFAULT_SCALE;
   updateScale();
   previewImage.style.filter = '';
   removeAllEffectClasses();
