@@ -1,4 +1,4 @@
-import { isEscape } from './utils.js';
+// import { isEscape } from './utils.js';
 
 // Константа с предустановленными эффектами
 const EFFECTS = {
@@ -43,10 +43,10 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 
 let currentEffect = 'none';
 
-// Инициализация слайдера
-if (typeof noUiSlider === 'undefined') {
-  throw new Error('NoUiSlider library not found');
-}
+// // Инициализация слайдера
+// if (typeof noUiSlider === 'undefined') {
+//   throw new Error('NoUiSlider library not found');
+// }
 
 noUiSlider.create(effectSliderElement, {
   range: { min: 0, max: 1 },
