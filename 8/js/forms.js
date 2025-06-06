@@ -1,23 +1,42 @@
 import { isEscape } from './utils.js';
 import { previewImage } from './scale.js';
-import { scaleState } from './scale.js';
+// import { scaleState } from './scale.js';
 import { updateScale } from './scale.js';
 import { removeAllEffectClasses} from './slider.js';
 import {sliderContainer} from './slider.js';
-import {effectLevelValue} from './slider.js';
+// import {effectLevelValue} from './slider.js';
 import {effectSliderElement} from './slider.js';
 
 const fileChooser = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.body;
 const hashtagsInput = document.querySelector('.text__hashtags');
-const descriptionTextArea = document.querySelector('.text__description');
-const submitButton = document.querySelector('#upload-submit');
+// const descriptionTextArea = document.querySelector('.text__description');
+// const submitButton = document.querySelector('#upload-submit');
 const uploadForm = document.querySelector('#upload-select-image');
 
 let currentScale = 100;
-let currentEffect = 'none';
-let pristineInstance = null;
+// let currentEffect = 'none';
+// let pristineInstance = null;
+
+
+
+// Настройка валидации формы
+// function setupValidation() {
+//   pristineInstance = new Pristine(uploadForm, {
+//     classTo: 'img-upload__field-wrapper',
+//     errorClass: 'img-upload__field-wrapper--error',
+//     errorTextParent: 'img-upload__field-wrapper'
+//   });
+
+//   pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
+// }
+
+const pristineInstance = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper'
+});
 
 // Валидация хэштегов
 function validateHashtags(value) {
@@ -30,16 +49,8 @@ function validateHashtags(value) {
   return hashtags.length <= 5 && valid && unique;
 }
 
-// Настройка валидации формы
-function setupValidation() {
-  pristineInstance = new Pristine(uploadForm, {
-    classTo: 'img-upload__field-wrapper',
-    errorClass: 'img-upload__field-wrapper--error',
-    errorTextParent: 'img-upload__field-wrapper'
-  });
+pristineInstance.addValidator(hashtagsInput,validateHashtags, 'Неверный формат хэштегов');
 
-  pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
-}
 // Обработчик загрузки файла
 function onFileSelected() {
   const file = fileChooser.files[0];
@@ -102,6 +113,6 @@ document.addEventListener('keydown', (e) => {
   if (isEscape(e)) hideOverlay();
 });
 
-setupValidation();
+// setupValidation();
 
 export { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm };
