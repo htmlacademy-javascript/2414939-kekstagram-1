@@ -51,8 +51,6 @@ noUiSlider.create(effectSliderElement, {
 effectSliderElement.noUiSlider.on('update', (values) => {
   const value = parseFloat(values[0]);
   effectLevelValue.value = value;
-  if (effectLevelValue) {
-    effectLevelValue.value = value;
   updateEffectStyle(value);
 });
 
