@@ -1,3 +1,5 @@
+import { isEscape } from './utils.js';
+
 const bigPictureSection = document.querySelector('.big-picture');
 const bigPictureImg = bigPictureSection.querySelector('.big-picture__img img');
 const likesCount = bigPictureSection.querySelector('.likes-count');
@@ -7,19 +9,17 @@ const socialComments = bigPictureSection.querySelector('.social__comments');
 const commentCountBlock = bigPictureSection.querySelector('.social__comment-count');
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
 const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
-import { isEscape } from './utils.js';
-
-function clearComments() {
-  socialComments.innerHTML = '';
-}
-
-const socialComment = bigPictureSection.querySelector('.social__comment'); // находим li
+const socialComment = bigPictureSection.querySelector('.social__comment');
 function createCommentElement(comment) {
   const cloneSocialComment = socialComment.cloneNode(true);
   cloneSocialComment.querySelector('.social__picture').src = comment.avatar;
   cloneSocialComment.querySelector('.social__picture').alt = comment.name;
   cloneSocialComment.querySelector('.social__text').textContent = comment.message;
   return cloneSocialComment;
+}
+
+function clearComments() {
+  socialComments.innerHTML = '';
 }
 
 function openBigPicture(photo) {
