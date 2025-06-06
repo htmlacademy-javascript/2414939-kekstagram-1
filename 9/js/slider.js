@@ -38,6 +38,7 @@ const effectsRadios = Array.from(document.querySelectorAll('.effects__radio'));
 const sliderContainer = document.querySelector('.effect-level');
 const effectSliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
+const effectLevelInput = document.querySelector('.effect-level__value');
 
 let currentEffect = 'none';
 
@@ -51,7 +52,10 @@ noUiSlider.create(effectSliderElement, {
 effectSliderElement.noUiSlider.on('update', (values) => {
   const value = parseFloat(values[0]);
   effectLevelValue.value = value;
-  updateEffectStyle(value);
+  if (effectLevelInput) {
+    effectLevelInput.value = value;
+    updateEffectStyle(value);
+  }
 });
 
 // Функция для установки выбранного эффекта
