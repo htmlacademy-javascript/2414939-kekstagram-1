@@ -1,8 +1,13 @@
 import { isEscape } from './utils.js';
 
+export const SCALE_STEP = 25;
+export const MIN_SCALE = 25;
+export const MAX_SCALE = 100;
+export const DEFAULT_SCALE = MAX_SCALE;
+
 // Объект состояния масштаба
 export const scaleState = {
-  currentScale: 100,
+  currentScale: MAX_SCALE,
 };
 
 // DOM элементы
@@ -19,16 +24,16 @@ function updateScale() {
 
 // Функция увеличения масштаба
 function increaseScale() {
-  if (scaleState.currentScale < 100) {
-    scaleState.currentScale += 25;
+  if (scaleState.currentScale < MAX_SCALE) {
+    scaleState.currentScale += SCALE_STEP;
     updateScale();
   }
 }
 
 // Функция уменьшения масштаба
 function decreaseScale() {
-  if (scaleState.currentScale > 25) {
-    scaleState.currentScale -= 25;
+  if (scaleState.currentScale > MIN_SCALE) {
+    scaleState.currentScale -= SCALE_STEP;
     updateScale();
   }
 }
