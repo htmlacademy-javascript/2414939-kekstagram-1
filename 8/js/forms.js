@@ -12,26 +12,9 @@ const fileChooser = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.body;
 const hashtagsInput = document.querySelector('.text__hashtags');
-// const descriptionTextArea = document.querySelector('.text__description');
-// const submitButton = document.querySelector('#upload-submit');
 const uploadForm = document.querySelector('#upload-select-image');
 
 let currentScale = DEFAULT_SCALE;
-// let currentEffect = 'none';
-// let pristineInstance = null;
-
-
-
-// Настройка валидации формы
-// function setupValidation() {
-//   pristineInstance = new Pristine(uploadForm, {
-//     classTo: 'img-upload__field-wrapper',
-//     errorClass: 'img-upload__field-wrapper--error',
-//     errorTextParent: 'img-upload__field-wrapper'
-//   });
-
-//   pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
-// }
 
 const pristineInstance = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -113,7 +96,5 @@ uploadForm.addEventListener('submit', sendForm);
 document.addEventListener('keydown', (e) => {
   if (isEscape(e)) hideOverlay();
 });
-
-// setupValidation();
 
 export { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm };
