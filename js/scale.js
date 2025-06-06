@@ -20,6 +20,10 @@ const biggerBtn = document.querySelector('.scale__control--bigger');
 function updateScale() {
   scaleValue.value = `${scaleState.currentScale}%`;
   previewImage.style.transform = `scale(${scaleState.currentScale / 100})`;
+
+  if (scaleValue) {
+    scaleValue.value = `${scaleState.currentScale}%`;
+  }
 }
 
 // Функция увеличения масштаба
