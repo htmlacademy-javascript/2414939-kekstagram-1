@@ -8,8 +8,3 @@ import { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm } from '.
 const photosData = generatePhotosData();
 
 renderThumbnails(photosData, openBigPicture);
-
-
-// Дождаться полной загрузки DOM
-document.addEventListener('DOMContentLoaded', () => {
-});

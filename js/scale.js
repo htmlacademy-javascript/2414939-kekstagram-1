@@ -1,4 +1,4 @@
-import { isEscape } from './utils.js';
+// import { isEscape } from './utils.js';
 
 export const SCALE_STEP = 25;
 export const MIN_SCALE = 25;
@@ -15,11 +15,15 @@ const scaleValue = document.querySelector('.scale__control--value');
 const previewImage = document.querySelector('.img-upload__preview > img');
 const smallerBtn = document.querySelector('.scale__control--smaller');
 const biggerBtn = document.querySelector('.scale__control--bigger');
+const scaleInput = document.querySelector('.scale__control--value');
 
 // Функция обновления отображения масштаба
 function updateScale() {
   scaleValue.value = `${scaleState.currentScale}%`;
   previewImage.style.transform = `scale(${scaleState.currentScale / 100})`;
+  if (scaleInput) {
+    scaleInput.value = `${scaleState.currentScale}%`;
+  }
 }
 
 // Функция увеличения масштаба
