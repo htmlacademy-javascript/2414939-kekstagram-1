@@ -1,11 +1,12 @@
 import { isEscape } from './utils.js';
-import { previewImage } from './scale.js';
-// import { scaleState } from './scale.js';
-import { updateScale } from './scale.js';
-import { removeAllEffectClasses} from './slider.js';
-import {sliderContainer} from './slider.js';
-// import {effectLevelValue} from './slider.js';
-import {effectSliderElement} from './slider.js';
+
+import { previewImage, updateScale } from './scale.js';
+
+import {
+  removeAllEffectClasses,
+  sliderContainer,
+  effectSliderElement
+} from './slider.js';
 
 const fileChooser = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
