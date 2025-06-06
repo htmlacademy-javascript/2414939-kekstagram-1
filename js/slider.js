@@ -1,5 +1,3 @@
-// import { isEscape } from './utils.js';
-
 // Константа с предустановленными эффектами
 const EFFECTS = {
   chrome: {
@@ -42,11 +40,6 @@ const effectSliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 
 let currentEffect = 'none';
-
-// // Инициализация слайдера
-// if (typeof noUiSlider === 'undefined') {
-//   throw new Error('NoUiSlider library not found');
-// }
 
 noUiSlider.create(effectSliderElement, {
   range: { min: 0, max: 1 },
