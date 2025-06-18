@@ -1,4 +1,4 @@
-import { generatePhotosData } from './data.js';
+import { loadPhotosFromServer } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
 import { increaseScale, decreaseScale, updateScale } from './scale.js';
@@ -12,3 +12,4 @@ const SERVER_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
   const photosData = await loadPhotosFromServer(SERVER_URL);
   renderThumbnails(photosData, openBigPicture);
 })();
+
