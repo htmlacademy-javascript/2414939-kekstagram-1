@@ -6,10 +6,52 @@ import { applyEffect, removeAllEffectClasses, updateEffectStyle } from './slider
 import { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm } from './forms.js';
 import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormData } from './server.js';
 
-const SERVER_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
+const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
 (async () => {
-  const photosData = await loadPhotosFromServer(SERVER_URL);
-  renderThumbnails(photosData, openBigPicture);
+  try {
+    // Загружаем данные с сервера
+    const photosData = await loadPhotosFromServer(DATA_URL);
+
+    if (photosData) {
+      // Рендерим миниатюры
+      renderThumbnails(photosData, openBigPicture);
+    } else {
+      console.error('Не удалось загрузить данные с сервера');
+    }
+  } catch (error) {
+    console.error('Произошла ошибка при загрузке данных:', error);
+  }
+
+  // Инициализация других компонентов
+  initComponents();
+
+  function initComponents() {
+  }
 })();
 
+// Функция для отправки формы
+async function handleFormSubmit(formData) {
+  blockSubmitButton();
+
+  const isSuccess = await sendDataToServer(formData);
+
+  if (isSuccess) {
+    showSuccessMessage();
+    resetForm();
+  } else {
+    showErrorMessage();
+  }
+
+  unblockSubmitButton();
+}
+
+// Показываем сообщение об успешной отправке
+function showSuccessMessage() {
+  // Реализация showSuccessMessage
+}
+
+// Показываем сообщение об ошибке
+function showErrorMessage() {
+  // Реализация showErrorMessage
+}

@@ -7,18 +7,25 @@ const body = document.body;
 
 // Функция отправки данных на сервер
 export async function sendDataToServer(formData) {
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
 
-  if (response.ok) {
-    showSuccessMessage();
-    return true;
-  } else {
+    if (response.ok) {
+      showSuccessMessage();
+      return true;
+    } else {
+      showErrorMessage();
+      console.error('Ошибка сервера:', response.statusText);
+      return false;
+    }
+  } catch (error) {
+    console.error('Ошибка при отправке данных:', error);
     showErrorMessage();
     return false;
   }
