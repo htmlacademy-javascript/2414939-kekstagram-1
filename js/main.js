@@ -10,11 +10,11 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
 (async () => {
   try {
-    // Загружаем данные с сервера
+    // Загружает данные с сервера
     const photosData = await loadPhotosFromServer(DATA_URL);
 
     if (photosData) {
-      // Рендерим миниатюры
+      // Рендерит миниатюры
       renderThumbnails(photosData, openBigPicture);
     } else {
       console.error('Не удалось загрузить данные с сервера');
@@ -46,12 +46,10 @@ async function handleFormSubmit(formData) {
   unblockSubmitButton();
 }
 
-// Показываем сообщение об успешной отправке
+// Показывает сообщение об успешной отправке
 function showSuccessMessage() {
-  // Реализация showSuccessMessage
 }
 
-// Показываем сообщение об ошибке
+// Показывает сообщение об ошибке
 function showErrorMessage() {
-  // Реализация showErrorMessage
 }
