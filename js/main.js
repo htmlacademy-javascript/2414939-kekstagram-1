@@ -1,3 +1,5 @@
+// main2.js
+
 import { loadPhotosFromServer } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
@@ -8,13 +10,11 @@ import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormDat
 
 const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
+// Основной асинхронный блок для загрузки данных с сервера
 (async () => {
   try {
-    // Загружает данные с сервера
     const photosData = await loadPhotosFromServer(DATA_URL);
-
     if (photosData) {
-      // Рендерит миниатюры
       renderThumbnails(photosData, openBigPicture);
     } else {
       console.error('Не удалось загрузить данные с сервера');
@@ -23,11 +23,10 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
     console.error('Произошла ошибка при загрузке данных:', error);
   }
 
-  // Инициализация других компонентов
+  // Инициализация компонента формы (необходимо развернуть логику)
   initComponents();
 
-  function initComponents() {
-  }
+  function initComponents() {}
 })();
 
 // Функция для отправки формы
@@ -37,19 +36,19 @@ async function handleFormSubmit(formData) {
   const isSuccess = await sendDataToServer(formData);
 
   if (isSuccess) {
-    showSuccessMessage();
-    resetForm();
+    resetForm(); // Сбрасываем форму после успешной отправки
+    hideOverlay(); // Скрываем модальное окно
   } else {
-    showErrorMessage();
+    console.error('Ошибка отправки формы');
   }
 
   unblockSubmitButton();
 }
 
-// Показывает сообщение об успешной отправке
-function showSuccessMessage() {
-}
-
-// Показывает сообщение об ошибке
-function showErrorMessage() {
-}
+// Регистрируем обработчик отправки формы
+const uploadForm = document.querySelector('#upload-select-image');
+uploadForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const formData = createFormData(uploadForm);
+  await handleFormSubmit(formData);
+});
