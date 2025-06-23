@@ -1,4 +1,4 @@
-// server2.js
+// server33.js
 
 import { isEscape } from './utils.js';
 
@@ -31,12 +31,12 @@ export async function sendDataToServer(formData) {
 }
 
 // Показывает сообщение об успешной отправке
-export function showSuccessMessage() {
+function showSuccessMessage() {
   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
   body.appendChild(successMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.matches('.success__button') || e.target.closest('.success') === null) {
+    if (e.target.classList.contains('success__button')) { // Ждём точное попадание на кнопку
       removeMessage(successMessage);
     }
   });
@@ -54,7 +54,7 @@ export function showErrorMessage() {
   body.appendChild(errorMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.matches('.error__button') || e.target.closest('.error') === null) {
+    if (e.target.classList.contains('error__button')) { // Аналогичное условие для ошибки
       removeMessage(errorMessage);
     }
   });
