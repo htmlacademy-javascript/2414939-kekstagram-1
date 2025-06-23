@@ -1,3 +1,5 @@
+// server.js
+
 import { isEscape } from './utils.js';
 
 const API_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
@@ -10,10 +12,7 @@ export async function sendDataToServer(formData) {
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
-      body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+      body: formData
     });
 
     if (response.ok) {
@@ -37,8 +36,7 @@ function showSuccessMessage() {
   body.appendChild(successMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('success__button') ||
-        e.target.closest('.success') === null) {
+    if (e.target.classList.contains('success__button') || e.target.closest('.success') === null) {
       removeMessage(successMessage);
     }
   });
@@ -56,8 +54,7 @@ function showErrorMessage() {
   body.appendChild(errorMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('error__button') ||
-        e.target.closest('.error') === null) {
+    if (e.target.classList.contains('error__button') || e.target.closest('.error') === null) {
       removeMessage(errorMessage);
     }
   });
