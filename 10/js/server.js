@@ -1,4 +1,4 @@
-// server3.js
+// server4.js
 
 import { isEscape } from './utils.js';
 
@@ -66,9 +66,16 @@ function showErrorMessage() {
   });
 }
 
-// Удаляет сообщение
+// Функция для удаления сообщения
 function removeMessage(message) {
-  message.remove(); // Автоматическое удаление элемента без проверки родителя
+  try {
+    if (message instanceof HTMLElement) {
+      message.remove(); // автоматическое удаление элемента
+    }
+  } catch (error) {
+    console.error('Ошибка при удалении сообщения:', error);
+  }
+
   document.removeEventListener('click', removeMessage);
   document.removeEventListener('keydown', removeMessage);
 }
