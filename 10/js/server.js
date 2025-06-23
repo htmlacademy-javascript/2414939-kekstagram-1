@@ -1,4 +1,4 @@
-// server4.js
+// server5.js
 
 import { isEscape } from './utils.js';
 
@@ -82,14 +82,18 @@ function removeMessage(message) {
 
 // Функция для блокировки кнопки отправки
 export function blockSubmitButton(button) {
-  button.disabled = true;
-  button.classList.add('loading');
+  if (button) { // Проверяем, что кнопка существует
+    button.disabled = true;
+    button.classList.add('loading');
+  }
 }
 
 // Функция для разблокировки кнопки отправки
 export function unblockSubmitButton(button) {
-  button.disabled = false;
-  button.classList.remove('loading');
+  if (button) { // Аналогичная проверка
+    button.disabled = false;
+    button.classList.remove('loading');
+  }
 }
 
 // Функция для создания формы данных

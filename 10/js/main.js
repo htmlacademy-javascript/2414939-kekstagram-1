@@ -31,18 +31,19 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
 // Функция для отправки формы
 async function handleFormSubmit(formData) {
+  const submitButton = document.querySelector('button[type="submit"]'); // убедитесь, что кнопка найдена
   blockSubmitButton();
 
   const isSuccess = await sendDataToServer(formData);
 
   if (isSuccess) {
-    resetForm(); // Сбрасываем форму после успешной отправки
-    hideOverlay(); // Скрываем модальное окно
+    resetForm();
+    hideOverlay();
   } else {
     console.error('Ошибка отправки формы');
   }
 
-  unblockSubmitButton();
+  unblockSubmitButton(submitButton); // разблокируем кнопку
 }
 
 // Регистрируем обработчик отправки формы
