@@ -1,9 +1,12 @@
-// forms.js
-
 import { isEscape } from './utils.js';
+
 import { previewImage, updateScale, DEFAULT_SCALE } from './scale.js';
-import { removeAllEffectClasses, sliderContainer, effectSliderElement } from './slider.js';
-import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormData } from './server.js';
+
+import {
+  removeAllEffectClasses,
+  sliderContainer,
+  effectSliderElement
+} from './slider.js';
 
 const fileChooser = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -30,7 +33,7 @@ function validateHashtags(value) {
   return hashtags.length <= 5 && valid && unique;
 }
 
-pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
+pristineInstance.addValidator(hashtagsInput,validateHashtags, 'Неверный формат хэштегов');
 
 // Обработчик загрузки файла
 function onFileSelected() {
@@ -61,23 +64,13 @@ function hideOverlay() {
 }
 
 // Отправляет форму
-async function sendForm(e) {
+function sendForm(e) {
   e.preventDefault();
 
   if (pristineInstance.validate()) {
-    const formData = createFormData(uploadForm);
-    blockSubmitButton(document.querySelector('button[type="submit"]'));
+    console.log('Форма прошла валидацию и готова к отправке!');
 
-    const isSuccessful = await sendDataToServer(formData);
-
-    if (isSuccessful) {
-      console.log('Форма успешно отправлена!');
-      hideOverlay();
-    } else {
-      console.error('Ошибка отправки формы');
-    }
-
-    unblockSubmitButton(document.querySelector('button[type="submit"]'));
+    hideOverlay();
   } else {
     console.warn('Форма не прошла валидацию');
   }

@@ -26,13 +26,13 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
   // Инициализация других компонентов
   initComponents();
 
-  function initComponents() {} // исправить позже
+  function initComponents() {
+  }
 })();
 
 // Функция для отправки формы
 async function handleFormSubmit(formData) {
-  const submitButton = document.querySelector('button[type="submit"]');
-  blockSubmitButton(submitButton);
+  blockSubmitButton();
 
   const isSuccess = await sendDataToServer(formData);
 
@@ -43,35 +43,13 @@ async function handleFormSubmit(formData) {
     showErrorMessage();
   }
 
-  unblockSubmitButton(submitButton);
+  unblockSubmitButton();
 }
 
-// Связывание обработчика отправки формы
-const uploadForm = document.querySelector('#upload-select-image');
-uploadForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const formData = createFormData(uploadForm);
-  await handleFormSubmit(formData);
-});
-
-// Функция для показа сообщения об успешной отправке
+// Показывает сообщение об успешной отправке
 function showSuccessMessage() {
-  const successTemplate = document.createElement('div');
-  successTemplate.innerHTML = '<p>Фотография успешно отправлена!</p>';
-  document.body.appendChild(successTemplate);
-
-  setTimeout(() => {
-    document.body.removeChild(successTemplate);
-  }, 3000); // автоскрытие сообщения через 3 секунды
 }
 
-// Функция для показа сообщения об ошибке
+// Показывает сообщение об ошибке
 function showErrorMessage() {
-  const errorTemplate = document.createElement('div');
-  errorTemplate.innerHTML = '<p>Возникла ошибка при отправке фотографии.</p>';
-  document.body.appendChild(errorTemplate);
-
-  setTimeout(() => {
-    document.body.removeChild(errorTemplate);
-  }, 3000); // автоскрытие сообщения через 3 секунды
 }
