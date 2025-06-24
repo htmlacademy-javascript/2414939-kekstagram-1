@@ -1,4 +1,4 @@
-// server1.js
+// server2.js
 
 import { isEscape } from './utils.js';
 
@@ -31,12 +31,12 @@ export async function sendDataToServer(formData) {
 }
 
 // Показывает сообщение об успешной отправке
-export function showSuccessMessage() {
+function showSuccessMessage() {
   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
   body.appendChild(successMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('success__button')) { // Ждём точное попадание на кнопку
+    if (e.target.classList.contains('success__button')) {
       removeMessage(successMessage);
     }
   });
@@ -49,12 +49,12 @@ export function showSuccessMessage() {
 }
 
 // Показывает сообщение об ошибке
-export function showErrorMessage() {
+function showErrorMessage() {
   const errorMessage = ERROR_TEMPLATE.cloneNode(true);
   body.appendChild(errorMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('error__button')) { // Аналогичное условие для ошибки
+    if (e.target.classList.contains('error__button')) {
       removeMessage(errorMessage);
     }
   });
