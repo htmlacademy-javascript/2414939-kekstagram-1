@@ -1,10 +1,10 @@
-// server2.js
+// server5.js
 
 import { isEscape } from './utils.js';
 
 const API_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
-const SUCCESS_TEMPLATE = document.querySelector('#success').content;
-const ERROR_TEMPLATE = document.querySelector('#error').content;
+const SUCCESS_TEMPLATE = document.querySelector('#success');
+const ERROR_TEMPLATE = document.querySelector('#error');
 const body = document.body;
 
 /**
@@ -38,10 +38,12 @@ export async function sendDataToServer(formData) {
  * Показывает сообщение об успешной отправке
  */
 function showSuccessMessage() {
-  const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
-  body.appendChild(successMessage);
+  // Вытаскиваем нужный элемент из шаблона
+  const successElement = SUCCESS_TEMPLATE.content.querySelector('.success').cloneNode(true);
+  body.appendChild(successElement);
 
-  // Обработчики для закрытия сообщения
+  const messageEl = successElement; // для удобства
+
   const onClick = (e) => {
     if (e.target.classList.contains('success__button')) {
       removeMessage();
@@ -54,14 +56,12 @@ function showSuccessMessage() {
     }
   };
 
-  // Функция для удаления сообщения и очистки слушателей
   function removeMessage() {
-    successMessage.remove();
+    messageEl.remove(); // удаляем сообщение
     document.removeEventListener('click', onClick);
     document.removeEventListener('keydown', onKeyDown);
   }
 
-  // Добавляем слушатели
   document.addEventListener('click', onClick);
   document.addEventListener('keydown', onKeyDown);
 }
@@ -70,10 +70,12 @@ function showSuccessMessage() {
  * Показывает сообщение об ошибке
  */
 function showErrorMessage() {
-  const errorMessage = ERROR_TEMPLATE.cloneNode(true);
-  body.appendChild(errorMessage);
+  // Вытаскиваем нужный элемент из шаблона
+  const errorElement = ERROR_TEMPLATE.content.querySelector('.error').cloneNode(true);
+  body.appendChild(errorElement);
 
-  // Обработчики для закрытия сообщения
+  const messageEl = errorElement; // для удобства
+
   const onClick = (e) => {
     if (e.target.classList.contains('error__button')) {
       removeMessage();
@@ -86,14 +88,12 @@ function showErrorMessage() {
     }
   };
 
-  // Функция для удаления сообщения и очистки слушателей
   function removeMessage() {
-    errorMessage.remove();
+    messageEl.remove(); // удаляем сообщение
     document.removeEventListener('click', onClick);
     document.removeEventListener('keydown', onKeyDown);
   }
 
-  // Добавляем слушатели
   document.addEventListener('click', onClick);
   document.addEventListener('keydown', onKeyDown);
 }
