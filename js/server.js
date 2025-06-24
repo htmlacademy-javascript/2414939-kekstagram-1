@@ -1,5 +1,3 @@
-// server5.js
-
 import { isEscape } from './utils.js';
 
 const API_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
@@ -7,11 +5,6 @@ const SUCCESS_TEMPLATE = document.querySelector('#success');
 const ERROR_TEMPLATE = document.querySelector('#error');
 const body = document.body;
 
-/**
- * Отправка данных на сервер
- * @param {FormData} formData - данные формы
- * @returns {Promise<boolean>} - результат отправки
- */
 export async function sendDataToServer(formData) {
   try {
     const response = await fetch(API_URL, {
@@ -34,15 +27,11 @@ export async function sendDataToServer(formData) {
   }
 }
 
-/**
- * Показывает сообщение об успешной отправке
- */
 function showSuccessMessage() {
-  // Вытаскиваем нужный элемент из шаблона
   const successElement = SUCCESS_TEMPLATE.content.querySelector('.success').cloneNode(true);
   body.appendChild(successElement);
 
-  const messageEl = successElement; // для удобства
+  const messageEl = successElement;
 
   const onClick = (e) => {
     if (e.target.classList.contains('success__button')) {
@@ -57,7 +46,7 @@ function showSuccessMessage() {
   };
 
   function removeMessage() {
-    messageEl.remove(); // удаляем сообщение
+    messageEl.remove();
     document.removeEventListener('click', onClick);
     document.removeEventListener('keydown', onKeyDown);
   }
@@ -66,15 +55,12 @@ function showSuccessMessage() {
   document.addEventListener('keydown', onKeyDown);
 }
 
-/**
- * Показывает сообщение об ошибке
- */
 function showErrorMessage() {
-  // Вытаскиваем нужный элемент из шаблона
+
   const errorElement = ERROR_TEMPLATE.content.querySelector('.error').cloneNode(true);
   body.appendChild(errorElement);
 
-  const messageEl = errorElement; // для удобства
+  const messageEl = errorElement;
 
   const onClick = (e) => {
     if (e.target.classList.contains('error__button')) {
@@ -89,7 +75,7 @@ function showErrorMessage() {
   };
 
   function removeMessage() {
-    messageEl.remove(); // удаляем сообщение
+    messageEl.remove();
     document.removeEventListener('click', onClick);
     document.removeEventListener('keydown', onKeyDown);
   }
@@ -98,10 +84,6 @@ function showErrorMessage() {
   document.addEventListener('keydown', onKeyDown);
 }
 
-/**
- * Блокирует кнопку отправки формы
- * @param {HTMLElement} button - кнопка формы
- */
 export function blockSubmitButton(button) {
   if (button) {
     button.disabled = true;
@@ -109,10 +91,6 @@ export function blockSubmitButton(button) {
   }
 }
 
-/**
- * Разблокирует кнопку отправки формы
- * @param {HTMLElement} button - кнопка формы
- */
 export function unblockSubmitButton(button) {
   if (button) {
     button.disabled = false;
@@ -120,11 +98,6 @@ export function unblockSubmitButton(button) {
   }
 }
 
-/**
- * Создает объект FormData из формы
- * @param {HTMLFormElement} form - форма
- * @returns {FormData}
- */
 export function createFormData(form) {
   return new FormData(form);
 }

@@ -1,5 +1,3 @@
-// main.js
-
 import { loadPhotosFromServer } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
@@ -10,7 +8,7 @@ import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormDat
 
 const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
-// Основной асинхронный блок для загрузки данных с сервера
+// Основной асинхронный блок для загрузки данных с сервера2
 (async () => {
   try {
     const photosData = await loadPhotosFromServer(DATA_URL);
@@ -23,7 +21,6 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
     console.error('Произошла ошибка при загрузке данных:', error);
   }
 
-  // Инициализация компонента формы (необходимо развернуть логику)
   initComponents();
 
   function initComponents() {}
@@ -31,8 +28,8 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
 // Функция для отправки формы
 async function handleFormSubmit(formData) {
-  const submitButton = document.querySelector('button[type="submit"]'); // убедитесь, что кнопка найдена
-  blockSubmitButton(submitButton); // передайте реальную кнопку
+  const submitButton = document.querySelector('button[type="submit"]');
+  blockSubmitButton(submitButton);
 
   const isSuccess = await sendDataToServer(formData);
 
@@ -43,10 +40,10 @@ async function handleFormSubmit(formData) {
     console.error('Ошибка отправки формы');
   }
 
-  unblockSubmitButton(submitButton); // разблокируем кнопку
+  unblockSubmitButton(submitButton);
 }
 
-// Регистрируем обработчик отправки формы
+// Регистрирует обработчик отправки формы
 const uploadForm = document.querySelector('#upload-select-image');
 uploadForm.addEventListener('submit', async (event) => {
   event.preventDefault();
