@@ -1,4 +1,4 @@
-// server.js
+// server2.js
 
 import { isEscape } from './utils.js';
 
@@ -7,7 +7,11 @@ const SUCCESS_TEMPLATE = document.querySelector('#success').content;
 const ERROR_TEMPLATE = document.querySelector('#error').content;
 const body = document.body;
 
-// Функция отправки данных на сервер
+/**
+ * Отправка данных на сервер
+ * @param {FormData} formData - данные формы
+ * @returns {Promise<boolean>} - результат отправки
+ */
 export async function sendDataToServer(formData) {
   try {
     const response = await fetch(API_URL, {
@@ -30,108 +34,97 @@ export async function sendDataToServer(formData) {
   }
 }
 
-// Показывает сообщение об успешной отправке
-// function showSuccessMessage() {
-//   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
-//   body.appendChild(successMessage);
-
-//   document.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('success__button') || e.target.closest('.success') === null) {
-//       removeMessage(successMessage);
-//     }
-//   });
-
-//   document.addEventListener('keydown', (e) => {
-//     if (isEscape(e)) {
-//       removeMessage(successMessage);
-//     }
-//   });
-// }
-
+/**
+ * Показывает сообщение об успешной отправке
+ */
 function showSuccessMessage() {
   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
   body.appendChild(successMessage);
 
-  document.addEventListener('click', (e) => {
+  // Обработчики для закрытия сообщения
+  const onClick = (e) => {
     if (e.target.classList.contains('success__button')) {
-      removeMessage(successMessage);
+      removeMessage();
     }
-  });
+  };
 
-  document.addEventListener('keydown', (e) => {
+  const onKeyDown = (e) => {
     if (isEscape(e)) {
-      removeMessage(successMessage);
+      removeMessage();
     }
-  });
+  };
+
+  // Функция для удаления сообщения и очистки слушателей
+  function removeMessage() {
+    successMessage.remove();
+    document.removeEventListener('click', onClick);
+    document.removeEventListener('keydown', onKeyDown);
+  }
+
+  // Добавляем слушатели
+  document.addEventListener('click', onClick);
+  document.addEventListener('keydown', onKeyDown);
 }
 
-// Показывает сообщение об ошибке
-// function showErrorMessage() {
-//   const errorMessage = ERROR_TEMPLATE.cloneNode(true);
-//   body.appendChild(errorMessage);
-
-//   document.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('error__button') || e.target.closest('.error') === null) {
-//       removeMessage(errorMessage);
-//     }
-//   });
-
-//   document.addEventListener('keydown', (e) => {
-//     if (isEscape(e)) {
-//       removeMessage(errorMessage);
-//     }
-//   });
-// }
-
+/**
+ * Показывает сообщение об ошибке
+ */
 function showErrorMessage() {
   const errorMessage = ERROR_TEMPLATE.cloneNode(true);
   body.appendChild(errorMessage);
 
-  document.addEventListener('click', (e) => {
+  // Обработчики для закрытия сообщения
+  const onClick = (e) => {
     if (e.target.classList.contains('error__button')) {
-      removeMessage(errorMessage);
+      removeMessage();
     }
-  });
+  };
 
-  document.addEventListener('keydown', (e) => {
+  const onKeyDown = (e) => {
     if (isEscape(e)) {
-      removeMessage(errorMessage);
+      removeMessage();
     }
-  });
-}
+  };
 
-// Функция для удаления сообщения
-function removeMessage(message) {
-  try {
-    if (message instanceof HTMLElement) {
-      message.remove(); // автоматическое удаление элемента
-    }
-  } catch (error) {
-    console.error('Ошибка при удалении сообщения:', error);
+  // Функция для удаления сообщения и очистки слушателей
+  function removeMessage() {
+    errorMessage.remove();
+    document.removeEventListener('click', onClick);
+    document.removeEventListener('keydown', onKeyDown);
   }
 
-  document.removeEventListener('click', removeMessage);
-  document.removeEventListener('keydown', removeMessage);
+  // Добавляем слушатели
+  document.addEventListener('click', onClick);
+  document.addEventListener('keydown', onKeyDown);
 }
 
-// Функция для блокировки кнопки отправки
+/**
+ * Блокирует кнопку отправки формы
+ * @param {HTMLElement} button - кнопка формы
+ */
 export function blockSubmitButton(button) {
-  if (button) { // Проверяем, что кнопка существует
+  if (button) {
     button.disabled = true;
     button.classList.add('loading');
   }
 }
 
-// Функция для разблокировки кнопки отправки
+/**
+ * Разблокирует кнопку отправки формы
+ * @param {HTMLElement} button - кнопка формы
+ */
 export function unblockSubmitButton(button) {
-  if (button) { // Аналогичная проверка
+  if (button) {
     button.disabled = false;
     button.classList.remove('loading');
   }
 }
 
-// Функция для создания формы данных
+/**
+ * Создает объект FormData из формы
+ * @param {HTMLFormElement} form - форма
+ * @returns {FormData}
+ */
 export function createFormData(form) {
-  const formData = new FormData(form);
-  return formData;
+  return new FormData(form);
 }
