@@ -1,5 +1,3 @@
-// forms.js
-
 import { isEscape } from './utils.js';
 import { previewImage, updateScale, DEFAULT_SCALE } from './scale.js';
 import { removeAllEffectClasses, sliderContainer, effectSliderElement } from './slider.js';
@@ -57,7 +55,7 @@ function hideOverlay() {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
 
-  resetForm(); // вызываем сброс формы при закрытии окна
+  resetForm();
 }
 
 // Отправляет форму
@@ -85,16 +83,16 @@ async function sendForm(e) {
 
 // Сбрасывает форму
 function resetForm() {
-  uploadForm.reset(); // очищает поля формы
-  currentScale = DEFAULT_SCALE; // сбрасывает масштаб
-  updateScale(); // обновляет отображаемый масштаб
-  previewImage.style.filter = ''; // снимает применяемые фильтры
-  removeAllEffectClasses(); // убирает классы эффектов
-  sliderContainer.classList.add('hidden'); // прячет контейнер слайдера
-  effectSliderElement.noUiSlider.set(effectSliderElement.noUiSlider.options.start); // сбрасывает положение слайдера
+  uploadForm.reset();
+  currentScale = DEFAULT_SCALE;
+  updateScale();
+  previewImage.style.filter = '';
+  removeAllEffectClasses();
+  sliderContainer.classList.add('hidden');
+  effectSliderElement.noUiSlider.set(effectSliderElement.noUiSlider.options.start);
 }
 
-// Регистрируем обработчики событий
+// Регистрирует обработчики событий
 fileChooser.addEventListener('change', onFileSelected);
 document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
 uploadForm.addEventListener('submit', sendForm);

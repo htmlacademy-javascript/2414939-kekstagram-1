@@ -1,5 +1,3 @@
-// import { isEscape } from './utils.js';
-
 export const SCALE_STEP = 25;
 export const MIN_SCALE = 25;
 export const MAX_SCALE = 100;
