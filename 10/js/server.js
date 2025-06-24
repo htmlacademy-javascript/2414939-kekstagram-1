@@ -1,4 +1,4 @@
-// server2.js
+// server3.js
 
 import { isEscape } from './utils.js';
 
@@ -31,7 +31,8 @@ export async function sendDataToServer(formData) {
 }
 
 // Показывает сообщение об успешной отправке
-function showSuccessMessage() {
+export async function sendDataToServer(formData) {
+ function showSuccessMessage() {
   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
   body.appendChild(successMessage);
 
@@ -49,7 +50,8 @@ function showSuccessMessage() {
 }
 
 // Показывает сообщение об ошибке
-function showErrorMessage() {
+export async function sendDataToServer(formData) {
+ function showErrorMessage() {
   const errorMessage = ERROR_TEMPLATE.cloneNode(true);
   body.appendChild(errorMessage);
 
@@ -67,7 +69,7 @@ function showErrorMessage() {
 }
 
 // Функция для удаления сообщения
-function removeMessage(message) {
+export function removeMessage(message) {
   if (message.parentNode) {
     message.parentNode.removeChild(message);
   }
