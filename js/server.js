@@ -31,12 +31,29 @@ export async function sendDataToServer(formData) {
 }
 
 // Показывает сообщение об успешной отправке
+// function showSuccessMessage() {
+//   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
+//   body.appendChild(successMessage);
+
+//   document.addEventListener('click', (e) => {
+//     if (e.target.classList.contains('success__button') || e.target.closest('.success') === null) {
+//       removeMessage(successMessage);
+//     }
+//   });
+
+//   document.addEventListener('keydown', (e) => {
+//     if (isEscape(e)) {
+//       removeMessage(successMessage);
+//     }
+//   });
+// }
+
 function showSuccessMessage() {
   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
   body.appendChild(successMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('success__button') || e.target.closest('.success') === null) {
+    if (e.target.classList.contains('success__button')) {
       removeMessage(successMessage);
     }
   });
@@ -49,12 +66,29 @@ function showSuccessMessage() {
 }
 
 // Показывает сообщение об ошибке
+// function showErrorMessage() {
+//   const errorMessage = ERROR_TEMPLATE.cloneNode(true);
+//   body.appendChild(errorMessage);
+
+//   document.addEventListener('click', (e) => {
+//     if (e.target.classList.contains('error__button') || e.target.closest('.error') === null) {
+//       removeMessage(errorMessage);
+//     }
+//   });
+
+//   document.addEventListener('keydown', (e) => {
+//     if (isEscape(e)) {
+//       removeMessage(errorMessage);
+//     }
+//   });
+// }
+
 function showErrorMessage() {
   const errorMessage = ERROR_TEMPLATE.cloneNode(true);
   body.appendChild(errorMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('error__button') || e.target.closest('.error') === null) {
+    if (e.target.classList.contains('error__button')) {
       removeMessage(errorMessage);
     }
   });
