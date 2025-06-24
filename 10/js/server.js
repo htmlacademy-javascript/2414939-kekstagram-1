@@ -1,4 +1,4 @@
-// server3.js
+// server.js
 
 import { isEscape } from './utils.js';
 
@@ -31,13 +31,12 @@ export async function sendDataToServer(formData) {
 }
 
 // Показывает сообщение об успешной отправке
-export async function sendDataToServer(formData) {
- function showSuccessMessage() {
+function showSuccessMessage() {
   const successMessage = SUCCESS_TEMPLATE.cloneNode(true);
   body.appendChild(successMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('success__button')) {
+    if (e.target.classList.contains('success__button') || e.target.closest('.success') === null) {
       removeMessage(successMessage);
     }
   });
@@ -50,13 +49,12 @@ export async function sendDataToServer(formData) {
 }
 
 // Показывает сообщение об ошибке
-export async function sendDataToServer(formData) {
- function showErrorMessage() {
+function showErrorMessage() {
   const errorMessage = ERROR_TEMPLATE.cloneNode(true);
   body.appendChild(errorMessage);
 
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('error__button')) {
+    if (e.target.classList.contains('error__button') || e.target.closest('.error') === null) {
       removeMessage(errorMessage);
     }
   });
@@ -69,10 +67,15 @@ export async function sendDataToServer(formData) {
 }
 
 // Функция для удаления сообщения
-export function removeMessage(message) {
-  if (message.parentNode) {
-    message.parentNode.removeChild(message);
+function removeMessage(message) {
+  try {
+    if (message instanceof HTMLElement) {
+      message.remove(); // автоматическое удаление элемента
+    }
+  } catch (error) {
+    console.error('Ошибка при удалении сообщения:', error);
   }
+
   document.removeEventListener('click', removeMessage);
   document.removeEventListener('keydown', removeMessage);
 }
