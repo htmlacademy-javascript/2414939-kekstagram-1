@@ -1,4 +1,4 @@
-// main2.js
+// main.js
 
 import { loadPhotosFromServer } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
@@ -6,7 +6,7 @@ import { openBigPicture } from './big-picture.js';
 import { increaseScale, decreaseScale, updateScale } from './scale.js';
 import { applyEffect, removeAllEffectClasses, updateEffectStyle } from './slider.js';
 import { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm } from './forms.js';
-import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormData, showSuccessMessage, showErrorMessage } from './server.js';
+import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormData } from './server.js';
 
 const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
@@ -31,19 +31,19 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
 // Функция для отправки формы
 async function handleFormSubmit(formData) {
-  blockSubmitButton();
+  const submitButton = document.querySelector('button[type="submit"]'); // убедитесь, что кнопка найдена
+  blockSubmitButton(submitButton); // передайте реальную кнопку
 
   const isSuccess = await sendDataToServer(formData);
 
   if (isSuccess) {
-    showSuccessMessage(); // покажем сообщение об успешной отправке
     resetForm();
     hideOverlay();
   } else {
-    showErrorMessage(); // покажем сообщение об ошибке
+    console.error('Ошибка отправки формы');
   }
 
-  unblockSubmitButton();
+  unblockSubmitButton(submitButton); // разблокируем кнопку
 }
 
 // Регистрируем обработчик отправки формы

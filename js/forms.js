@@ -1,4 +1,4 @@
-// forms2.js
+// forms.js
 
 import { isEscape } from './utils.js';
 import { previewImage, updateScale, DEFAULT_SCALE } from './scale.js';
