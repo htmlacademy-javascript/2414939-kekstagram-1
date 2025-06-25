@@ -72,7 +72,7 @@ async function sendForm(e) {
       console.log('Форма успешно отправлена!');
       hideOverlay();
     } else {
-      console.error('Ошибка отправки формы');
+      // console.error('Ошибка отправки формы');
     }
 
     unblockSubmitButton(document.querySelector('button[type="submit"]'));
