@@ -19,7 +19,9 @@ const pristineInstance = new Pristine(uploadForm, {
 
 // Валидация хэштегов
 function validateHashtags(value) {
-  if (!value.trim()) return true;
+  if (!value.trim()) {
+    return true;
+  }
 
   const hashtags = value.toLowerCase().trim().split(/\s+/);
   const valid = hashtags.every((tag) => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
@@ -69,7 +71,7 @@ async function sendForm(e) {
     const isSuccessful = await sendDataToServer(formData);
 
     if (isSuccessful) {
-      console.log('Форма успешно отправлена!');
+      // console.log('Форма успешно отправлена!');
       hideOverlay();
     } else {
       // console.error('Ошибка отправки формы');
@@ -77,7 +79,7 @@ async function sendForm(e) {
 
     unblockSubmitButton(document.querySelector('button[type="submit"]'));
   } else {
-    console.warn('Форма не прошла валидацию');
+    // console.warn('Форма не прошла валидацию');
   }
 }
 
@@ -97,7 +99,10 @@ fileChooser.addEventListener('change', onFileSelected);
 document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
 uploadForm.addEventListener('submit', sendForm);
 document.addEventListener('keydown', (e) => {
-  if (isEscape(e)) hideOverlay();
+  if (isEscape(e)) {
+    hideOverlay();
+  }
 });
 
 export { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm };
+
