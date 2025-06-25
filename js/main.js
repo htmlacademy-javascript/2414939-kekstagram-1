@@ -1,3 +1,5 @@
+//main2
+
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
 import { hideOverlay, resetForm, blockSubmitButton, unblockSubmitButton, showOverlay} from './forms.js';
@@ -37,9 +39,9 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 // }
 
 // Регистрирует обработчик отправки формы
-const uploadForm = document.querySelector('#upload-select-image');
-uploadForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const formData = createFormData(uploadForm);
-  await handleFormSubmit(formData);
-});
+// const uploadForm = document.querySelector('#upload-select-image');
+// uploadForm.addEventListener('submit', async (event) => {
+//   event.preventDefault();
+//   const formData = createFormData(uploadForm);
+//   await handleFormSubmit(formData);
+// });
