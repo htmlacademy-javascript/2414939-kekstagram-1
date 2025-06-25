@@ -1,3 +1,5 @@
+//server
+
 import { isEscape } from './utils.js';
 import { showSuccessMessage, showErrorMessage } from './messages.js';
 
