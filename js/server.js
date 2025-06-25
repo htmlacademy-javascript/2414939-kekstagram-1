@@ -40,5 +40,3 @@ export async function loadPhotosFromServer(url = DATA_URL) {
     return [];
   }
 }
-
-export {DATA_URL};
