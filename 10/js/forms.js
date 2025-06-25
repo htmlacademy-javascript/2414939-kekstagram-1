@@ -1,7 +1,7 @@
 import { isEscape } from './utils.js';
 import { previewImage, updateScale, DEFAULT_SCALE } from './scale.js';
 import { removeAllEffectClasses, sliderContainer, effectSliderElement } from './slider.js';
-import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormData } from './server.js';
+import { sendDataToServer, createFormData } from './server.js';
 
 const fileChooser = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -44,6 +44,22 @@ function onFileSelected() {
   }
 
   showOverlay();
+}
+
+// Кнопки
+
+export function blockSubmitButton(button) {
+  if (button) {
+    button.disabled = true;
+    button.classList.add('loading');
+  }
+}
+
+export function unblockSubmitButton(button) {
+  if (button) {
+    button.disabled = false;
+    button.classList.remove('loading');
+  }
 }
 
 // Показывает окно формы
