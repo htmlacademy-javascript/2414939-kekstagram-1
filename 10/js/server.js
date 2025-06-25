@@ -62,3 +62,16 @@ export function unblockSubmitButton(button) {
 export function createFormData(form) {
   return new FormData(form);
 }
+
+export async function loadPhotosFromServer(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Ошибка загрузки данных (${response.status})`);
+    }
+    return await response.json();
+  } catch (error) {
+    // console.error('Ошибка загрузки данных:', error.message);
+    return [];
+  }
+}
