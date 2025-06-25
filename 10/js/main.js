@@ -1,8 +1,5 @@
-// import { loadPhotosFromServer } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
-// import { increaseScale, decreaseScale, updateScale } from './scale.js';
-// import { applyEffect, removeAllEffectClasses, updateEffectStyle } from './slider.js';
 import { hideOverlay, resetForm } from './forms.js';
 import { sendDataToServer, blockSubmitButton, unblockSubmitButton, createFormData,loadPhotosFromServer} from './server.js';
 
@@ -14,12 +11,9 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
     const photosData = await loadPhotosFromServer(DATA_URL);
     if (photosData) {
       renderThumbnails(photosData, openBigPicture);
-    } else {
-      // console.error('Не удалось загрузить данные с сервера');
     }
-  } catch (error) {
-    // console.error('Произошла ошибка при загрузке данных:', error);
-  }
+    // else {}
+  } catch (error) {}
 
   initComponents();
 
@@ -36,9 +30,8 @@ async function handleFormSubmit(formData) {
   if (isSuccess) {
     resetForm();
     hideOverlay();
-  } else {
-    // console.error('Ошибка отправки формы');
   }
+  // else {}
 
   unblockSubmitButton(submitButton);
 }
