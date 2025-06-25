@@ -89,13 +89,9 @@ async function sendForm(e) {
     if (isSuccessful) {
       hideOverlay();
     }
-    // else {
-    // }
 
     unblockSubmitButton(document.querySelector('button[type="submit"]'));
   }
-  // else {
-  // }
 }
 
 // Сбрасывает форму
