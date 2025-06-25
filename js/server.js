@@ -20,11 +20,11 @@ export async function sendDataToServer(formData) {
       return true;
     } else {
       showErrorMessage();
-      console.error('Ошибка сервера:', response.statusText);
+      // console.error('Ошибка сервера:', response.statusText);
       return false;
     }
   } catch (error) {
-    console.error('Ошибка при отправке данных:', error);
+    // console.error('Ошибка при отправке данных:', error);
     showErrorMessage();
     return false;
   }

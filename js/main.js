@@ -15,10 +15,10 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
     if (photosData) {
       renderThumbnails(photosData, openBigPicture);
     } else {
-      console.error('Не удалось загрузить данные с сервера');
+      // console.error('Не удалось загрузить данные с сервера');
     }
   } catch (error) {
-    console.error('Произошла ошибка при загрузке данных:', error);
+    // console.error('Произошла ошибка при загрузке данных:', error);
   }
 
   initComponents();
@@ -37,7 +37,7 @@ async function handleFormSubmit(formData) {
     resetForm();
     hideOverlay();
   } else {
-    console.error('Ошибка отправки формы');
+    // console.error('Ошибка отправки формы');
   }
 
   unblockSubmitButton(submitButton);

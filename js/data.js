@@ -24,7 +24,7 @@ export async function loadPhotosFromServer(url) {
     }
     return await response.json();
   } catch (error) {
-    console.error('Ошибка загрузки данных:', error.message);
+    // console.error('Ошибка загрузки данных:', error.message);
     return [];
   }
 }
