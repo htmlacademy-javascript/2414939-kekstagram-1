@@ -1,11 +1,8 @@
-//main3
 
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
 import { hideOverlay, resetForm, blockSubmitButton, unblockSubmitButton, showOverlay} from './forms.js';
 import { sendDataToServer, createFormData,loadPhotosFromServer} from './server.js';
-// import { increaseScale, decreaseScale, updateScale } from './scale.js';
-// import { applyEffect, removeAllEffectClasses, updateEffectStyle } from './slider.js';
 
 const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
@@ -24,26 +21,3 @@ const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
   function initComponents() {}
 })();
 
-// // Функция для отправки формы
-// async function handleFormSubmit(formData) {
-//   const submitButton = document.querySelector('button[type="submit"]');
-//   blockSubmitButton(submitButton);
-
-//   const isSuccess = await sendDataToServer(formData);
-
-//   if (isSuccess) {
-//     resetForm();
-//     hideOverlay();
-//   }
-//   // else {}
-
-//   unblockSubmitButton(submitButton);
-// }
-
-// Регистрирует обработчик отправки формы
-// const uploadForm = document.querySelector('#upload-select-image');
-// uploadForm.addEventListener('submit', async (event) => {
-//   event.preventDefault();
-//   const formData = createFormData(uploadForm);
-//   await handleFormSubmit(formData);
-// });

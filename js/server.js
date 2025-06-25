@@ -22,20 +22,6 @@ export async function sendDataToServer(formData) {
   }
 }
 
-// export function blockSubmitButton(button) {
-//   if (button) {
-//     button.disabled = true;
-//     button.classList.add('loading');
-//   }
-// }
-
-// export function unblockSubmitButton(button) {
-//   if (button) {
-//     button.disabled = false;
-//     button.classList.remove('loading');
-//   }
-// }
-
 export function createFormData(form) {
   return new FormData(form);
 }
