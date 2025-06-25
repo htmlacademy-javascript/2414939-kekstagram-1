@@ -1,4 +1,5 @@
 import { showSuccessMessage, showErrorMessage } from './messages.js';
+import { showAlert } from './utils.js';
 
 const API_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
 const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
@@ -35,6 +36,7 @@ export async function loadPhotosFromServer(url = DATA_URL) {
     }
     return await response.json();
   } catch (error) {
+    showAlert('Не удалось загрузить данные с сервера. попробуйте позже.');
     return [];
   }
 }
