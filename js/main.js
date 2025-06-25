@@ -1,8 +1,8 @@
 
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
-import { hideOverlay, resetForm, blockSubmitButton, unblockSubmitButton, showOverlay} from './forms.js';
-import { sendDataToServer, createFormData,loadPhotosFromServer} from './server.js';
+import { hideOverlay, resetForm, blockSubmitButton, unblockSubmitButton, showOverlay } from './forms.js';
+import { sendDataToServer, createFormData, loadPhotosFromServer, DATA_URL } from './server.js';
 
 // const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
