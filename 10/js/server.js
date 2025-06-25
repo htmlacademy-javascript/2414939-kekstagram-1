@@ -1,6 +1,7 @@
 import { showSuccessMessage, showErrorMessage } from './messages.js';
 
 const API_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
+const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
 export async function sendDataToServer(formData) {
   try {
@@ -26,7 +27,7 @@ export function createFormData(form) {
   return new FormData(form);
 }
 
-export async function loadPhotosFromServer(url) {
+export async function loadPhotosFromServer(url = DATA_URL) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
