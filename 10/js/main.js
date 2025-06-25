@@ -2,7 +2,7 @@
 import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
 // import { hideOverlay, resetForm, blockSubmitButton, unblockSubmitButton, showOverlay } from './forms.js';
-import { loadPhotosFromServer, DATA_URL } from './server.js';
+import { loadPhotosFromServer } from './server.js';
 import './forms.js';
 
 // const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
