@@ -1,6 +1,6 @@
-//server
+//server2
 
-import { isEscape } from './utils.js';
+// import { isEscape } from './utils.js';
 import { showSuccessMessage, showErrorMessage } from './messages.js';
 
 const API_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
