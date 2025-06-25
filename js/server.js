@@ -1,15 +1,7 @@
-//server3
-
-// import { isEscape } from './utils.js';
 import { showSuccessMessage, showErrorMessage } from './messages.js';
 
 const API_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
 
-// /**
-//  * Отправка данных на сервер
-//  * @param {FormData} formData - данные формы
-//  * @returns {Promise<boolean>} - результат отправки
-//  */
 export async function sendDataToServer(formData) {
   try {
     const response = await fetch(API_URL, {
@@ -22,20 +14,14 @@ export async function sendDataToServer(formData) {
       return true;
     } else {
       showErrorMessage();
-      // console.error('Ошибка сервера:', response.statusText);
       return false;
     }
   } catch (error) {
-    // console.error('Ошибка при отправке данных:', error);
     showErrorMessage();
     return false;
   }
 }
 
-// /**
-//  * Блокировка кнопки отправки формы
-//  * @param {HTMLElement} button - кнопка формы
-//  */
 export function blockSubmitButton(button) {
   if (button) {
     button.disabled = true;
@@ -43,10 +29,6 @@ export function blockSubmitButton(button) {
   }
 }
 
-// /**
-//  * Разблокировка кнопки отправки формы
-//  * @param {HTMLElement} button - кнопка формы
-//  */
 export function unblockSubmitButton(button) {
   if (button) {
     button.disabled = false;
@@ -54,11 +36,6 @@ export function unblockSubmitButton(button) {
   }
 }
 
-// /**
-//  * Создает объект FormData из формы
-//  * @param {HTMLFormElement} form - форма
-//  * @returns {FormData}
-//  */
 export function createFormData(form) {
   return new FormData(form);
 }
@@ -71,7 +48,6 @@ export async function loadPhotosFromServer(url) {
     }
     return await response.json();
   } catch (error) {
-    // console.error('Ошибка загрузки данных:', error.message);
     return [];
   }
 }

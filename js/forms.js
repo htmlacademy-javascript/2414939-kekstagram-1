@@ -71,16 +71,15 @@ async function sendForm(e) {
     const isSuccessful = await sendDataToServer(formData);
 
     if (isSuccessful) {
-      // console.log('Форма успешно отправлена!');
       hideOverlay();
-    } else {
-      // console.error('Ошибка отправки формы');
     }
+    // else {
+    // }
 
     unblockSubmitButton(document.querySelector('button[type="submit"]'));
-  } else {
-    // console.warn('Форма не прошла валидацию');
   }
+  // else {
+  // }
 }
 
 // Сбрасывает форму
