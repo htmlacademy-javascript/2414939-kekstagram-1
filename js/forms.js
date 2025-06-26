@@ -1,12 +1,7 @@
 import { isEscape } from './utils.js';
-
 import { previewImage, updateScale, DEFAULT_SCALE } from './scale.js';
-
-import {
-  removeAllEffectClasses,
-  sliderContainer,
-  effectSliderElement
-} from './slider.js';
+import { removeAllEffectClasses, sliderContainer, effectSliderElement } from './slider.js';
+import { sendDataToServer, createFormData } from './server.js';
 
 const fileChooser = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -24,7 +19,9 @@ const pristineInstance = new Pristine(uploadForm, {
 
 // Валидация хэштегов
 function validateHashtags(value) {
-  if (!value.trim()) return true;
+  if (!value.trim()) {
+    return true;
+  }
 
   const hashtags = value.toLowerCase().trim().split(/\s+/);
   const valid = hashtags.every((tag) => /^#[a-zа-яё0-9]{1,19}$/i.test(tag));
@@ -33,7 +30,7 @@ function validateHashtags(value) {
   return hashtags.length <= 5 && valid && unique;
 }
 
-pristineInstance.addValidator(hashtagsInput,validateHashtags, 'Неверный формат хэштегов');
+pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
 
 // Обработчик загрузки файла
 function onFileSelected() {
@@ -47,6 +44,22 @@ function onFileSelected() {
   }
 
   showOverlay();
+}
+
+// Кнопки
+
+export function blockSubmitButton(button) {
+  if (button) {
+    button.disabled = true;
+    button.classList.add('loading');
+  }
+}
+
+export function unblockSubmitButton(button) {
+  if (button) {
+    button.disabled = false;
+    button.classList.remove('loading');
+  }
 }
 
 // Показывает окно формы
@@ -64,15 +77,20 @@ function hideOverlay() {
 }
 
 // Отправляет форму
-function sendForm(e) {
+async function sendForm(e) {
   e.preventDefault();
 
   if (pristineInstance.validate()) {
-    console.log('Форма прошла валидацию и готова к отправке!');
+    const formData = createFormData(uploadForm);
+    blockSubmitButton(document.querySelector('button[type="submit"]'));
 
-    hideOverlay();
-  } else {
-    console.warn('Форма не прошла валидацию');
+    const isSuccessful = await sendDataToServer(formData);
+
+    if (isSuccessful) {
+      hideOverlay();
+    }
+
+    unblockSubmitButton(document.querySelector('button[type="submit"]'));
   }
 }
 
@@ -84,17 +102,18 @@ function resetForm() {
   previewImage.style.filter = '';
   removeAllEffectClasses();
   sliderContainer.classList.add('hidden');
-
-  // Возвращаем слайдер к начальному значению
   effectSliderElement.noUiSlider.set(effectSliderElement.noUiSlider.options.start);
 }
 
-// Регистрируем обработчики событий
+// Регистрирует обработчики событий
 fileChooser.addEventListener('change', onFileSelected);
 document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
 uploadForm.addEventListener('submit', sendForm);
 document.addEventListener('keydown', (e) => {
-  if (isEscape(e)) hideOverlay();
+  if (isEscape(e)) {
+    hideOverlay();
+  }
 });
 
 export { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm };
+
