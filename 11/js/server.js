@@ -41,22 +41,20 @@
 //   }
 // }
 
-
-
-import { showAlert } from './utils.js'; // предполагается, что у вас есть такая функция
+import { showAlert } from './utils.js';
 
 const DATA_URL = 'https://28.javascript.htmlacademy.pro/kekstagram/data';
 
-/**
- * Загружает фотографии с сервера.
- * @param {string} url - URL для загрузки данных. По умолчанию DATA_URL.
- * @returns {Promise<Array>} - Обещание, которое возвращает массив фотографий.
- */
 export async function loadPhotosFromServer(url = DATA_URL) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Ошибка загрузки данных (${response.status})`);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Ошибка загрузки данных (${response.status})`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    showAlert(error.message); // показываем сообщение об ошибке
+    throw error; // пробрасываем ошибку дальше, если нужно
   }
-  const data = await response.json();
-  return data;
 }
