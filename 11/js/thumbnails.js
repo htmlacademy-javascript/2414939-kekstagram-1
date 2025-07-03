@@ -1,8 +1,9 @@
-const picturesContainer = document.querySelector('.pictures');
+// const picturesContainer = document.querySelector('.pictures');
+const photosContainer = document.querySelector('.photos-container');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 function renderThumbnails(photos, openBigPicture) {
-  picturesContainer.innerHTML = '';
+  photosContainer.innerHTML = '';
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -19,7 +20,8 @@ function renderThumbnails(photos, openBigPicture) {
     fragment.appendChild(pictureElement);
   });
 
-  picturesContainer.appendChild(fragment);
+  // picturesContainer.appendChild(fragment);
+  photosContainer.appendChild(pictureElement);
 }
 
 export { renderThumbnails };
