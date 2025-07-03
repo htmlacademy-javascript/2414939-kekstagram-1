@@ -36,7 +36,6 @@ function setupFilters() {
 
   // Объявляем дебаунс-функцию для каждого фильтра
   const debouncedDefault = debounce(() => {
-    console.log('Фильтр по умолчанию');
     renderThumbnails(currentPhotos, openBigPicture);
     setActiveFilter(defaultBtn);
   }, 500);
