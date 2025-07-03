@@ -1,12 +1,12 @@
 const picturesContainer = document.querySelector('.pictures');
 // const photosContainer = document.querySelector('.photos-container');
-const imgUpload = document.querySelector('img-upload');
+// const imgUpload = document.querySelector('img-upload');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 function renderThumbnails(photos, openBigPicture) {
   // photosContainer.innerHTML = '';
   picturesContainer.textContent = '';
-  imgUpload.classList.add('visible');
+  // imgUpload.classList.add('visible');
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
