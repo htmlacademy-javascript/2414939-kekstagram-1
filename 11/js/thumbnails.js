@@ -25,3 +25,4 @@ function renderThumbnails(photos, openBigPicture) {
 }
 
 export { renderThumbnails };
+
