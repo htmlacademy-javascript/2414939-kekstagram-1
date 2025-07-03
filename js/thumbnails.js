@@ -1,5 +1,6 @@
 const picturesContainer = document.querySelector('.pictures');
 // const photosContainer = document.querySelector('.photos-container');
+picturesContainer.innerHTML = '';
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 function renderThumbnails(photos, openBigPicture) {
