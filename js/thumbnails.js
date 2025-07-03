@@ -5,7 +5,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 function renderThumbnails(photos, openBigPicture) {
   // photosContainer.innerHTML = '';
-  picturesContainer.textContent = '';
+  // picturesContainer.textContent = '';
   // imgUpload.classList.add('visible');
   const fragment = document.createDocumentFragment();
 
