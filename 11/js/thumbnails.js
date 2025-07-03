@@ -5,6 +5,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 function renderThumbnails(photos, openBigPicture) {
   // photosContainer.innerHTML = '';
+  picturesContainer.textContent = '';
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
