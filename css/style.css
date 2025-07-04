@@ -185,7 +185,8 @@ main {
 /* Блок, в котором размещаются фотографии других пользователей
    ========================================================================== */
 
-.pictures {
+.pictures,
+.photos-list {
   display: -ms-grid;
   display: grid;
   grid-gap: 10px;
@@ -1361,7 +1362,8 @@ position: relative;
     width: 980px;
   }
 
-  .pictures {
+  .pictures,
+  .photos-list {
     -ms-grid-columns: (1fr)[5];
     grid-template-columns: repeat(5, 1fr);
   }
@@ -1382,7 +1384,8 @@ position: relative;
     width: 600px;
   }
 
-  .pictures {
+  .pictures,
+  .photos-list {
     -ms-grid-columns: (1fr)[3];
     grid-template-columns: repeat(3, 1fr);
   }
