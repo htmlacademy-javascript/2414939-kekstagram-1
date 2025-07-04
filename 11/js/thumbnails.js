@@ -1,9 +1,8 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-// const photosList = document.querySelector('.photos-list');
+
 
 function renderThumbnails(photos, openBigPicture) {
-  photosList.innerHTML = '';
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
