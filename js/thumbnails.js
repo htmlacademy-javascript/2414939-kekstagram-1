@@ -1,12 +1,9 @@
 const picturesContainer = document.querySelector('.pictures');
-// const photosContainer = document.querySelector('.photos-container');
-// const imgUpload = document.querySelector('img-upload');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const photosList = document.querySelector('.photos-list');
 
 function renderThumbnails(photos, openBigPicture) {
-  // photosContainer.innerHTML = '';
-  // picturesContainer.textContent = '';
-  // imgUpload.style.display = 'block';
+  photosList.innerHTML = '';
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -24,7 +21,6 @@ function renderThumbnails(photos, openBigPicture) {
   });
 
   picturesContainer.appendChild(fragment);
-  // photosContainer.appendChild(pictureElement);
 }
 
 export { renderThumbnails };
