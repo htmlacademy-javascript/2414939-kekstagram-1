@@ -1,6 +1,6 @@
-// const picturesContainer = document.querySelector('.pictures');
+const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const photosList = document.querySelector('.photos-list');
+// const photosList = document.querySelector('.photos-list');
 
 function renderThumbnails(photos, openBigPicture) {
   photosList.innerHTML = '';
@@ -20,7 +20,7 @@ function renderThumbnails(photos, openBigPicture) {
     fragment.appendChild(pictureElement);
   });
 
-  photosList.appendChild(fragment);
+  picturesContainer.appendChild(fragment);
 }
 
 export { renderThumbnails };
