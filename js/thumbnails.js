@@ -1,9 +1,14 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+//функция удаления
+const clearPictures = () => {
+  picturesContainer.querySelectorAll('.picture').forEach((picture) => picture.remove());
+};
+
 
 function renderThumbnails(photos, openBigPicture) {
-  picturesContainer.innerHTML = '';
+  clearPictures ();
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
