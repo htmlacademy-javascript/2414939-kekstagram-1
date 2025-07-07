@@ -19,8 +19,8 @@ loadPhotosFromServer()
 
     // Настройка обработчиков фильтров
     setupFilters();
-  })
-  .catch(error => console.error('Ошибка загрузки:', error));
+  });
+// .catch(error => console.error('Ошибка загрузки:', error));
 
 function setupFilters() {
   const defaultBtn = document.getElementById('filter-default');
