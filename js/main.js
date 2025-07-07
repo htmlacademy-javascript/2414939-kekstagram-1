@@ -53,7 +53,7 @@ function setupFilters() {
 
 // Установка активного фильтра
 function setActiveFilter(button) {
-  document.querySelectorAll('.img-filters__button').forEach(btn => btn.classList.remove('img-filters__button--active'));
+  document.querySelectorAll('.img-filters__button').forEach((btn) => btn.classList.remove('img-filters__button--active'));
   button.classList.add('img-filters__button--active');
 }
 

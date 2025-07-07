@@ -1,5 +1,5 @@
 import { isEscape } from './utils.js';
-import { previewImage, updateScale, DEFAULT_SCALE } from './scale.js';
+import { previewImage, updateScale, DEFAULT_SCALE} from './scale.js';
 import { removeAllEffectClasses, sliderContainer, effectSliderElement } from './slider.js';
 import { sendDataToServer, createFormData } from './server.js';
 
