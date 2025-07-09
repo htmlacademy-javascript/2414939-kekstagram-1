@@ -160,3 +160,6 @@ function onEscKey(evt) {
        closeBigPicture();
    }
 }
+
+
+export { openBigPicture };
