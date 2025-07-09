@@ -83,10 +83,10 @@ const socialCommentTemplate = document.querySelector('.social__comment');
 
 let currentPhotoComments = [];
 let commentsShownCount = 0;
-const COMMENTS_PER_STEP =5;
+const COMMENTS_PER_STEP = 5;
 
 function createCommentElement(comment) {
-    const cloneSocialComment= socialCommentTemplate.cloneNode(true);
+    const cloneSocialComment = socialCommentTemplate.cloneNode(true);
     cloneSocialComment.querySelector('.social__picture').src= comment.avatar;
     cloneSocialComment.querySelector('.social__picture').alt= comment.name;
     cloneSocialComment.querySelector('.social__text').textContent= comment.message;
@@ -98,17 +98,17 @@ function clearComments() {
 }
 
 function renderComments() {
-    socialComments.innerHTML= '';
+    socialComments.innerHTML = '';
 
-    const commentsToShow= currentPhotoComments.slice(0, commentsShownCount);
+    const commentsToShow = currentPhotoComments.slice(0, commentsShownCount);
 
     commentsToShow.forEach((comment) => {
-        const commentEl= createCommentElement(comment);
+        const commentEl = createCommentElement(comment);
         socialComments.appendChild(commentEl);
     });
 
     commentCountBlock.classList.remove('hidden');
-    commentCountBlock.querySelector('.comments-count').textContent= `${commentsToShow.length} из ${currentPhotoComments.length}`;
+    commentCountBlock.querySelector('.comments-count').textContent = `${commentsToShow.length} из ${currentPhotoComments.length}`;
 
     if (commentsShownCount >= currentPhotoComments.length) {
         commentsLoader.classList.add('hidden');
@@ -120,16 +120,16 @@ function renderComments() {
 function openBigPicture(photo) {
     bigPictureSection.classList.remove('hidden');
 
-    bigPictureImg.src= photo.url;
-    bigPictureImg.alt= photo.description;
-    likesCount.textContent= photo.likes;
+    bigPictureImg.src = photo.url;
+    bigPictureImg.alt = photo.description;
+    likesCount.textContent = photo.likes;
 
-    currentPhotoComments= photo.comments;
-    commentsShownCount= Math.min(COMMENTS_PER_STEP, currentPhotoComments.length);
+    currentPhotoComments = photo.comments;
+    commentsShownCount = Math.min(COMMENTS_PER_STEP, currentPhotoComments.length);
 
     renderComments();
 
-    socialCaption.textContent= photo.description;
+    socialCaption.textContent = photo.description;
 
     document.body.classList.add('modal-open');
 
@@ -141,7 +141,7 @@ function openBigPicture(photo) {
 commentsLoader.addEventListener('click', () => {
    commentsShownCount += COMMENTS_PER_STEP;
    if (commentsShownCount > currentPhotoComments.length) {
-       commentsShownCount= currentPhotoComments.length;
+       commentsShownCount = currentPhotoComments.length;
    }
    renderComments();
 });
