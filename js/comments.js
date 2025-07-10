@@ -59,3 +59,4 @@ function loadMoreComments() {
   renderComments();
 }
 export { initializeComments, loadMoreComments };
+
