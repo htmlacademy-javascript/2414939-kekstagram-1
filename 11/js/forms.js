@@ -17,7 +17,6 @@ const pristineInstance = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-// Валидация хэштегов
 function validateHashtags(value) {
   if (!value.trim()) {
     return true;
@@ -32,7 +31,6 @@ function validateHashtags(value) {
 
 pristineInstance.addValidator(hashtagsInput, validateHashtags, 'Неверный формат хэштегов');
 
-// Обработчик загрузки файла
 function onFileSelected() {
   const file = fileChooser.files[0];
   if (file) {
@@ -45,8 +43,6 @@ function onFileSelected() {
 
   showOverlay();
 }
-
-// Кнопки
 
 export function blockSubmitButton(button) {
   if (button) {
@@ -62,13 +58,12 @@ export function unblockSubmitButton(button) {
   }
 }
 
-// Показывает окно формы
 function showOverlay() {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
 }
 
-// Скрывает окно формы
+
 function hideOverlay() {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -76,7 +71,6 @@ function hideOverlay() {
   resetForm();
 }
 
-// Отправляет форму
 async function sendForm(e) {
   e.preventDefault();
 
@@ -94,7 +88,6 @@ async function sendForm(e) {
   }
 }
 
-// Сбрасывает форму
 function resetForm() {
   uploadForm.reset();
   currentScale = DEFAULT_SCALE;
@@ -105,7 +98,6 @@ function resetForm() {
   effectSliderElement.noUiSlider.set(effectSliderElement.noUiSlider.options.start);
 }
 
-// Регистрирует обработчики событий
 fileChooser.addEventListener('change', onFileSelected);
 document.querySelector('#upload-cancel').addEventListener('click', hideOverlay);
 uploadForm.addEventListener('submit', sendForm);
