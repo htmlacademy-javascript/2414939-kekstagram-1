@@ -93,6 +93,7 @@ import { renderThumbnails } from './thumbnails.js';
 import { openBigPicture } from './big-picture.js';
 import { loadPhotosFromServer } from './server.js';
 import { setupFilters } from './filters.js'; // Импортируем функции фильтров
+import './forms.js';
 
 // Находим контейнер фильтров и показываем его после загрузки изображений
 const filtersContainer = document.querySelector('.img-filters');
@@ -110,5 +111,5 @@ loadPhotosFromServer()
 
     // Настройка обработчиков фильтров
     setupFilters(currentPhotos, renderThumbnails, openBigPicture);
-  })
+  });
 // .catch(error => console.error('Ошибка загрузки:', error));
