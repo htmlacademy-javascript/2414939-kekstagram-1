@@ -69,7 +69,7 @@ const bigPictureSection = document.querySelector('.big-picture');
 const socialComments = bigPictureSection.querySelector('.social__comments');
 const commentCountBlock = bigPictureSection.querySelector('.social__comment-count');
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
-const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
+// const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
 const socialCommentTemplate = document.querySelector('.social__comment');
 
 let currentPhotoComments = [];
@@ -117,5 +117,12 @@ function initializeComments(photo) {
   renderComments();
 }
 
+function loadMoreComments() {
+  commentsShownCount += COMMENTS_PER_STEP;
+  if (commentsShownCount > currentPhotoComments.length) {
+    commentsShownCount = currentPhotoComments.length;
+  }
+  renderComments();
+}
 // Экспортируем функции
-export { initializeComments };
+export { initializeComments, loadMoreComments };
