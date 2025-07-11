@@ -74,4 +74,3 @@ function onLoadMoreComments() {
 }
 
 export { openBigPicture };
-

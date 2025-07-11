@@ -54,5 +54,3 @@ export function setupFilters(currentPhotos, renderThumbnails, openBigPicture) {
   randomBtn.addEventListener('click', debouncedRenderRandom);
   discussedBtn.addEventListener('click', debouncedRenderDiscussed);
 }
-
-

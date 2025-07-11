@@ -18,4 +18,3 @@ loadPhotosFromServer()
 
     setupFilters(currentPhotos, renderThumbnails, openBigPicture);
   });
-
