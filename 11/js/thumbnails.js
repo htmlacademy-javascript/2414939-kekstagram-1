@@ -1,6 +1,7 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+//функция удаления
 const clearPictures = () => {
   picturesContainer.querySelectorAll('.picture').forEach((picture) => picture.remove());
 };

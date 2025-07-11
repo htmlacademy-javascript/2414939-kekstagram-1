@@ -1,9 +1,10 @@
-// import { isEscape } from './utils.js';
+import { isEscape } from './utils.js';
 
 const bigPictureSection = document.querySelector('.big-picture');
 const socialComments = bigPictureSection.querySelector('.social__comments');
 const commentCountBlock = bigPictureSection.querySelector('.social__comment-count');
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
+// const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
 const socialCommentTemplate = document.querySelector('.social__comment');
 
 let currentPhotoComments = [];
@@ -58,4 +59,5 @@ function loadMoreComments() {
   }
   renderComments();
 }
+// Экспортируем функции
 export { initializeComments, loadMoreComments };

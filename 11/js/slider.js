@@ -1,3 +1,4 @@
+// Константа с предустановленными эффектами
 const EFFECTS = {
   chrome: {
     filter: 'grayscale',
@@ -31,6 +32,7 @@ const EFFECTS = {
   }
 };
 
+// Глобальные переменные
 const previewImage = document.querySelector('.img-upload__preview > img');
 const effectsRadios = Array.from(document.querySelectorAll('.effects__radio'));
 const sliderContainer = document.querySelector('.effect-level');
@@ -55,6 +57,8 @@ effectSliderElement.noUiSlider.on('update', (values) => {
     updateEffectStyle(value);
   }
 });
+
+// Функция для установки выбранного эффекта
 function applyEffect() {
   const selected = document.querySelector('input[name="effect"]:checked').value;
   currentEffect = selected;
@@ -76,11 +80,13 @@ function applyEffect() {
   sliderContainer.classList.remove('hidden');
 }
 
+// Удаляет все классы эффектов
 function removeAllEffectClasses() {
   previewImage.className = '';
   previewImage.classList.add('img-upload__preview-image');
 }
 
+// Применяет новый эффект на основании значения слайдера
 function updateEffectStyle(value) {
   if (currentEffect === 'none') {
     previewImage.style.filter = '';
@@ -91,7 +97,7 @@ function updateEffectStyle(value) {
   previewImage.style.filter = `${filter}(${value}${unit})`;
 }
 
-
+// Регистрируем обработчики для переключения эффектов
 effectsRadios.forEach((radio) => radio.addEventListener('change', applyEffect));
 
 export { applyEffect, removeAllEffectClasses, updateEffectStyle, sliderContainer, effectSliderElement, effectLevelValue };
