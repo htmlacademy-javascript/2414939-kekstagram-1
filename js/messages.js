@@ -51,4 +51,3 @@ export function showSuccessMessage() {
 export function showErrorMessage() {
   createMessage(TPL.ERROR, 'error__button');
 }
-

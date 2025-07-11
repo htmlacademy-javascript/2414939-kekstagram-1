@@ -108,4 +108,3 @@ document.addEventListener('keydown', (e) => {
 });
 
 export { onFileSelected, showOverlay, hideOverlay, sendForm, resetForm };
-
