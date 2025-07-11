@@ -1,3 +1,5 @@
+//messages.js
+
 // import { isEscape } from './utils.js';
 
 // const TPL = {
@@ -77,27 +79,26 @@ function createMessage(templateId, buttonClass) {
 
   const button = messageElement.querySelector(`.${buttonClass}`);
 
-  // Объявляем обработчики перед их использованием
-  const onClick = (e) => {
+  // Объявляем функции как обычные, чтобы можно было их использовать до их определения
+  function removeMessage() {
+    messageElement.remove();
+    document.removeEventListener('click', onClick);
+    document.removeEventListener('keydown', onKeyDown);
+  }
+
+  function onClick(e) {
     if (button && e.target.closest(`.${buttonClass}`)) {
       removeMessage();
     } else if (!e.target.closest(`.${messageElement.className}`)) {
       removeMessage();
     }
-  };
+  }
 
-  const onKeyDown = (e) => {
+  function onKeyDown(e) {
     if (isEscape(e)) {
       removeMessage();
     }
-  };
-
-  // Объявляем функцию удаления сообщения
-  const removeMessage = () => {
-    messageElement.remove();
-    document.removeEventListener('click', onClick);
-    document.removeEventListener('keydown', onKeyDown);
-  };
+  }
 
   // Назначаем обработчики
   document.addEventListener('click', onClick);
@@ -108,9 +109,6 @@ export function showSuccessMessage() {
   createMessage(TPL.SUCCESS, 'success__button');
 }
 
-export function showErrorMessage() {
-  createMessage(TPL.ERROR, 'error__button');
-}
 export function showErrorMessage() {
   createMessage(TPL.ERROR, 'error__button');
 }
