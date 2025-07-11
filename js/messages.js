@@ -15,6 +15,7 @@ function createMessage(templateId, buttonClass) {
     return;
   }
 
+  // Клонируем содержимое шаблона
   const messageElement = template.content.cloneNode(true).children[0]; // получаем корень (например, <section>)
   body.appendChild(messageElement);
 
@@ -27,9 +28,11 @@ function createMessage(templateId, buttonClass) {
   };
 
   const onClick = (e) => {
+    // Закрытие при клике на кнопку
     if (button && e.target.closest(`.${buttonClass}`)) {
       removeMessage();
     } else if (!e.target.closest(`.${messageElement.className}`)) {
+      // Клик вне сообщения — закрываем
       removeMessage();
     }
   };
@@ -40,6 +43,7 @@ function createMessage(templateId, buttonClass) {
     }
   };
 
+  // Обработчики
   document.addEventListener('click', onClick);
   document.addEventListener('keydown', onKeyDown);
 }
