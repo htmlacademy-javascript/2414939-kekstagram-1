@@ -1,4 +1,4 @@
-// bigpicture.js
+// bigpicture2.js
 import { isEscape } from './utils.js'; // функция для проверки на клавишу Escape
 import { initializeComments, loadMoreComments } from './comments.js'; // функции для работы с комментариями
 
@@ -6,7 +6,7 @@ import { initializeComments, loadMoreComments } from './comments.js'; // фун�
 const bigPictureSection = document.querySelector('.big-picture');
 const bigPictureImg = bigPictureSection.querySelector('.big-picture__img img');
 const likesCountElem = bigPictureSection.querySelector('.likes-count');
-const commentsCountElem = bigPictureSection.querySelector('.comments-count');
+// const commentsCountElem = bigPictureSection.querySelector('.comments-count');
 const socialCaption = bigPictureSection.querySelector('.social__caption');
 
 const closeButton = bigPictureSection.querySelector('.big-picture__cancel');
